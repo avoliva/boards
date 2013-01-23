@@ -8,12 +8,16 @@ from django.contrib.auth.models import User
 
 
 class LinksListView(ListView):
-    model = Links
+	model = Links
+
+	def get_context_data(self, **kwargs):
+		c = super(LinksListView, self).get_context_data(**kwargs)
+		user = self.request.user
+		return c
 
 
 class LinksDetailView(DetailView):
 	model = Links
-
 
 	def get_context_data(self, **kwargs):
 
@@ -34,15 +38,10 @@ class LinksDetailView(DetailView):
 				# Check if user voted for link already.
 				check = Vote.objects.get(voter=user, link=link)
 
-				# If they have, change their vote, otherwise create a new one.
-				# if check:
 				link.rank = (link.rank - check.vote) + int(param)
 				check.vote = int(param)
 				check.save()
 				
-				# else:
-				# 	Vote.objects.create(voter=user, link=link, vote=int(v))
-				# 	link.votes_count += 1
 			except Exception as e:
 				Vote.objects.create(voter=user, link=link, vote=int(param))
 				link.votes_count += 1

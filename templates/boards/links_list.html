@@ -1,39 +1,6 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+{% extends "base.html" %}
 
-  <title>http://localhost/ - Links</title>
-  <link rel="icon" href="https://static.endoftheinter.net/images/dealwithit.ico" type=
-  "image/x-icon" />
-  <link rel="apple-touch-icon-precomposed" href=
-  "https://static.endoftheinter.net/images/apple-touch-icon-ipad.png" />
-  <link rel="stylesheet" type="text/css" href="http://static.endoftheinter.net/style/nblue.css?22" />
-    <script type="text/javascript" src="templates/default/js/base.js?27"></script>
-</head>
-<body class="regular">
-  <div class="body">
-  <div class="menubar">
-  <a href="/boards">Home</a> | 
-  <a href="/archives.php">Archives</a> | 
-  <a href="/boards/create">Add a link</a> | 
-  <a href="/boards/top">Top voted links</a> | 
-  <a href="/boards/top_week">Links of the week</a> |
-  <a href="/boards/">New links</a><br />
-  <a href="/boards/all">All links</a> |
-  <a href="/links.php?mode=fav">Favorites</a> | 
-  <a href="/links.php?mode=search">Search</a> | 
-  <a href="/stats.php">Stats</a> | 
-  <a href="/userlist.php">User List</a> | 
-  <a href="/boards/logout/">Logout</a> | 
-  <a href="//wiki.endoftheinter.net/index.php/Help:Rules">Help</a>
-</div>
-
-
-    <div style=
-    "position:fixed;z-index:999;background:red;width:1px;height:1px;bottom:45px!important;bottom:10000px;right:24px">
-    <!--a reminder, for all that we fought against. -->
-    </div>
-
+{% block content %}
     <h1>Links</h1>
 
     <div class="userbar">
@@ -81,7 +48,7 @@
         </tr>
         {% for links in links_list.all %}
         <tr class="r0">
-          <td><a href="/linkme.php?l=101">{{ links.name }} </a></td>
+          <td><a href="/boards/{{ links.id }}/">{{ links.name }} </a></td>
 			
 		  <td><a href="/profile.php?user=2182">{{ links.user.username}} </a></td>
           <td>{{ links.pub_date }}</td>
@@ -99,17 +66,8 @@
       Page: 1
     </div><br />
     <br />
-    			<small>
-				<b>Time Taken:</b> 0.1601s 
-			</small>
 
-  </div>
+  <div style="display: none;" id="hiddenlpsubmitdiv"></div>
 
-  <div style="display: none;" id="hiddenlpsubmitdiv"></div><script type=
-  "text/javascript">
-//<![CDATA[
-  try{for(var lastpass_iter=0; lastpass_iter < document.forms.length; lastpass_iter++){ var lastpass_f = document.forms[lastpass_iter]; if(typeof(lastpass_f.lpsubmitorig2)=="undefined"){ lastpass_f.lpsubmitorig2 = lastpass_f.submit; lastpass_f.submit = function(){ var form=this; var customEvent = document.createEvent("Event"); customEvent.initEvent("lpCustomEvent", true, true); var d = document.getElementById("hiddenlpsubmitdiv"); for(var i = 0; i < document.forms.length; i++){ if(document.forms[i]==form){ d.innerText=i; } } d.dispatchEvent(customEvent); form.lpsubmitorig2(); } } }}catch(e){}
-  //]]>
-  </script>
-</body>
-</html>
+  {% endblock %}
+

@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, url
-from boards.views import LinksListView, LinksDetailView, LinksCreateView
+from boards.views import LinksListView, LinksDetailView, LinksCreateView, UserListView
 from boards.models import Links
+from django.contrib.auth.models import User
 from datetime import datetime, timedelta
 from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template
@@ -34,6 +35,10 @@ urlpatterns = patterns('',
 
 	# All links
 	url(r'^all[/]$', login_required(LinksListView.as_view()), name='all_links'),
+
+	# User list
+	url(r'^user_list[/]$', login_required(UserListView.as_view(
+		queryset=User.objects.order_by('id'))), name='user_list'),
 
 	# Login page
 	url(r'^login[/]$', 'django.contrib.auth.views.login', 

@@ -72,6 +72,11 @@ class LinksCreateView(FormView):
 	# The model that this form uses
 	form_class = LinksCreateForm
 
+	def get_context_data(self, **kwargs):
+		c = super(LinksCreateView, self).get_context_data(**kwargs)
+		user = self.request.user
+		return c
+
 	def form_valid(self, form):
 		
 		# Grabs the form data 
@@ -91,3 +96,11 @@ class LinksCreateView(FormView):
 		self.success_url = '/boards/' + str(link.id)
 
 		return super(LinksCreateView, self).form_valid(form)
+
+
+class UserListView(ListView):
+
+	def get_context_data(self, **kwargs):
+		c = super(UserListView, self).get_context_data(**kwargs)
+		user = self.request.user
+		return c

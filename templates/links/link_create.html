@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Add teh link!</h1>
+<em></em>
+<br />
+<form action="/boards/create/" method="POST">{% csrf_token %}
+<b>Link Title</b><br />
+{{ form.name }}
+<br />
+<b>Link URL</b><br />
+{{ form.url }}
+<input type="checkbox" id="nourl" name="nourl" onchange="document.getElementById('lurl').disabled=!(document.getElementById('lurl').disabled); document.getElementById('lurl').readonly=!(document.getElementById('lurl').readonly)"> <small>(No URL Required)</small><br />
+<br />
+<b>Link Categories</b><br />
+{{ form.category }}
+<br />
+<br />
+<b>Link Description</b><br />
+Enter a link description. Make it good!<br />
+{{ form.description }}
+<br />
+<br />
+<input type="submit" name="addlink" value="Add Link">
+</form>			
+
+{% endblock %}
+

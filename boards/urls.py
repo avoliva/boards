@@ -5,9 +5,7 @@ from boards.models import Links
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta
 from django.contrib.auth.decorators import login_required
-from django.views.generic.simple import direct_to_template
 
-from boards import views
 
 urlpatterns = patterns('',
 

@@ -31,7 +31,7 @@ class Links(models.Model):
 	pub_date = models.DateTimeField('date published', auto_now=True, 
 		editable=False)
 
-	# Average of votes for the link. Sum of all votes /10
+	# Average of votes for the link. Sum of vote rank / vote count
 	votes = models.DecimalField(max_digits=5, decimal_places=2, 
 		default='0.00', editable=False)
 
@@ -46,6 +46,7 @@ class Links(models.Model):
 	rank = models.IntegerField(default=0, editable=False)
 
 	class Meta:
+		# order by descend. newest links first.
 		ordering = ['-pub_date']
 
 	def __unicode__(self):

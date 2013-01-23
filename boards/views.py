@@ -1,12 +1,6 @@
-from django.http import HttpResponse, Http404
-from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, FormView
-from django.template import RequestContext, loader, Context
-from django.core.urlresolvers import reverse
 from boards.models import Links, LinksCreateForm, Category, Vote, Profile
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
-
 
 
 class LinksListView(ListView):
@@ -37,6 +31,7 @@ class LinksDetailView(DetailView):
 
 			# Get link object
 			link = c['object']
+
 			try:
 				# Check if user voted for link already.
 				check = Vote.objects.get(voter=user, link=link)
@@ -46,8 +41,8 @@ class LinksDetailView(DetailView):
 				check.vote = int(param)
 				check.save()
 				
+			# @todo Change to explicit exception DoesNotExist
 			except Exception as e:
-				
 				# Creates a new vote object
 				Vote.objects.create(voter=user, link=link, vote=int(param))
 				
@@ -73,11 +68,6 @@ class LinksCreateView(FormView):
 
 	# The model that this form uses
 	form_class = LinksCreateForm
-
-	def get_context_data(self, **kwargs):
-		c = super(LinksCreateView, self).get_context_data(**kwargs)
-		user = self.request.user
-		return c
 
 	def form_valid(self, form):
 		

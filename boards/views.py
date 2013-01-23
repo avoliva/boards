@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, FormView
 from django.template import RequestContext, loader, Context
 from django.core.urlresolvers import reverse
-from boards.models import Links, LinksCreateForm, Category, Vote
+from boards.models import Links, LinksCreateForm, Category, Vote, Profile
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
@@ -106,9 +106,11 @@ class UserListView(ListView):
 		return c
 
 
-class UserDetailView(DetailView):
+# http://blog.bripkens.de/2011/04/adding-custom-profiles-to-the-django-user-model/
+class ProfileDetailView(DetailView):
+	model = Profile
 
 	def get_context_data(self, **kwargs):
-		c = super(UserDetailView, self).get_context_data(**kwargs)
+		c = super(ProfileDetailView, self).get_context_data(**kwargs)
 		user = self.request.user
 		return c

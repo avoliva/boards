@@ -154,3 +154,7 @@ LOGGING = {
         },
     }
 }
+
+# Custom
+
+AUTH_PROFILE_MODULE = 'boards.Profile'

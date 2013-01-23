@@ -25,6 +25,7 @@ class LinksDetailView(DetailView):
 
 		from decimal import Decimal
 		c = super(LinksDetailView, self).get_context_data(**kwargs)
+
 		# Grab the current user.
 		user = self.request.user
 
@@ -46,6 +47,7 @@ class LinksDetailView(DetailView):
 				check.save()
 				
 			except Exception as e:
+				
 				# Creates a new vote object
 				Vote.objects.create(voter=user, link=link, vote=int(param))
 				

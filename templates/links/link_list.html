@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Links</h1>
+
+    <div class="userbar">
+      <a href="/profile.php?user=2182">{{ user.username }}(1)</a>:
+      <span id="userbar_pms" style="display:none"><a href=
+      "https://links.endoftheinter.net/inbox.php">Private Messages (<span id=
+      "userbar_pms_count">0</span>)</a> |</span> <a href=
+      "https://links.endoftheinter.net/links.php?mode=user&amp;userid=18026&amp;type=3#"
+      onclick="return toggle_spoiler(document.getElementById('links_cat_filt'))">Edit
+      category filters</a> | <a href=
+      "https://wiki.endoftheinter.net/index.php/Help:Rules">Help</a>
+    </div>
+
+
+    <div class="infobar">
+      Page 1 of <span>1</span> <span style="display:none">| <a href=
+      "https://links.endoftheinter.net/links.php?mode=user&amp;userid=18026&amp;type=3&amp;page=2">
+      Next Page</a></span> <span style="display:none">| <a href=
+      "https://links.endoftheinter.net/links.php?mode=user&amp;userid=18026&amp;type=3&amp;page=1">
+      Last Page</a></span>
+    </div>
+
+    <table class="grid">
+      <tbody>
+        <tr>
+          <th><a href=
+          "https://links.endoftheinter.net/links.php?mode=user&amp;userid=18026&amp;type=3&amp;category=0&amp;exclude=0&amp;sort=2&amp;sortd=1">
+          Title</a></th>
+          
+          <th><a href=
+          "https://links.endoftheinter.net/links.php?mode=user&amp;userid=18026&amp;type=3&amp;category=0&amp;exclude=0&amp;sort=1&amp;sortd=1">
+          Added By:</a></th>
+
+          <th><a href=
+          "https://links.endoftheinter.net/links.php?mode=user&amp;userid=18026&amp;type=3&amp;category=0&amp;exclude=0&amp;sort=1&amp;sortd=1">
+          Date</a></th>
+
+          <th><a href=
+          "https://links.endoftheinter.net/links.php?mode=user&amp;userid=18026&amp;type=3&amp;category=0&amp;exclude=0&amp;sort=4&amp;sortd=2">
+          Rating</a></th>
+
+          <th><a href=
+          "https://links.endoftheinter.net/links.php?mode=user&amp;userid=18026&amp;type=3&amp;category=0&amp;exclude=0&amp;sort=6&amp;sortd=2">
+          Rank</a></th>
+        </tr>
+        {% for links in links_list.all %}
+        <tr class="r0">
+          <td><a href="/links/{{ links.id }}/">{{ links.name }} </a></td>
+			
+		  <td><a href="/profile.php?user=2182">{{ links.user.username}} </a></td>
+          <td>{{ links.pub_date }}</td>
+
+          <td>{{ links.rating }}</td>
+
+          <td>{{ links.rank }}</td>
+
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="infobar">
+      Page: 1
+    </div><br />
+    <br />
+
+  <div style="display: none;" id="hiddenlpsubmitdiv"></div>
+
+  {% endblock %}
+

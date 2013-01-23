@@ -59,10 +59,10 @@ p {
 </style>
 <body>
 <p>Sie haben das Ende des Internets erreicht. Geben Sie bitte Ihre Anmeldeinformationen ein, um fortzufahren.</p>
-<form action='/boards/login/' method="POST">{% csrf_token %}
+<form action='/links/login/' method="POST">{% csrf_token %}
     <label><span>Benutzername:</span>{{ form.username }}</label>
   <label><span>Passwort:</span> {{ form.password }}</label>
-  <input type="hidden" name="next" value="/boards/" />
+  <input type="hidden" name="next" value="/links/" />
   <input class="submit" type="submit"  value="Anmelden" />
 </form>
 </body>

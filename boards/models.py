@@ -60,13 +60,7 @@ class Vote(models.Model):
 	# Which link the user voted for
 	link = models.ForeignKey(Links)
 
-	# Check to make sure a user can only vote once per link
-	pushes = models.IntegerField(default=0, editable=False)
-
 	vote = models.IntegerField(default=0, editable=False)
-
-	class Meta:
-		unique_together = (('voter', 'link', 'pushes', 'vote'),)
 
 
 # Create form for the link. Uses django form models.

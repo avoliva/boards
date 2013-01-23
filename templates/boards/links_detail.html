@@ -39,7 +39,7 @@
     </div>
     <h1>{{ links.name }}</h1><br />
     <br />
-    <a href="http://locahost" target="_blank">{{ links.name }}</a><br />
+    <a href="{{ links.url }}" target="_blank">{{ links.url }}</a><br />
     <br />
     <b>Added by:</b> <a href=
     "/profile.php?user=2182">{{ links.user.username }}</a><br />
@@ -51,7 +51,7 @@
     <b>Share:</b> <a href="/ss.php?l=65">localhost/ss.php?l=SS65</a><br /><br />
     <b>Category:</b> {{ links.category }}
     <b>Description:</b> {{ links.description }}
-    {% if links.user.username not in user.username %}
+    {% ifnotequal links.user.id user.id %}
     <b>Vote:</b> 
 	    <a href="/boards/{{ links.id }}/?votes=0">0</a> 
 	    <a href="/boards/{{ links.id }}/?votes=1">1</a>
@@ -66,7 +66,7 @@
 	    <a href="/boards/{{ links.id }}/?votes=10">10</a> <br />
    	<br /><b></b><br />
 
-    {% endif %}
+    {% endifnotequal %}
 	<br />
 	<br />
 	<br />

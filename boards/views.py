@@ -36,15 +36,17 @@ class LinksDetailView(DetailView):
 
 				# If they have, change their vote, otherwise create a new one.
 				# if check:
+				link.rank = (link.rank - check.vote) + int(param)
 				check.vote = int(param)
 				check.save()
-				link.rank = int(param)
+				
 				# else:
 				# 	Vote.objects.create(voter=user, link=link, vote=int(v))
 				# 	link.votes_count += 1
 			except Exception as e:
 				Vote.objects.create(voter=user, link=link, vote=int(param))
 				link.votes_count += 1
+				link.rank += int(param)
 
 			link.save()
 

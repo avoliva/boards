@@ -13,11 +13,7 @@ class Category(models.Model):
 
 
 class Links(models.Model):
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> b73268e3e3a3092949fe98b6a9056453421a093f
 	# The user who created the link
 	user = models.ForeignKey(User, related_name='link_creator')
 
@@ -67,11 +63,13 @@ class Vote(models.Model):
 	# Check to make sure a user can only vote once per link
 	pushes = models.IntegerField(default=0, editable=False)
 
+	vote = models.IntegerField(default=0, editable=False)
 
-<<<<<<< HEAD
+	class Meta:
+		unique_together = (('voter', 'link', 'pushes', 'vote'),)
+
+
 # Create form for the link. Uses django form models.
-=======
->>>>>>> b73268e3e3a3092949fe98b6a9056453421a093f
 class LinksCreateForm(ModelForm):
 
 	class Meta:

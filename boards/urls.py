@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from boards.views import LinksListView, LinksDetailView, LinksCreateView, UserListView
+from boards.views import LinksListView, LinksDetailView, LinksCreateView, UserListView, UserDetailView
 from boards.models import Links
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta
@@ -39,6 +39,10 @@ urlpatterns = patterns('',
 	# User list
 	url(r'^user_list[/]$', login_required(UserListView.as_view(
 		queryset=User.objects.order_by('id'))), name='user_list'),
+
+	# User Profile
+	url(r'^profile/(?P<pk>\d+)[/]$', login_required(UserDetailView.as_view()), 
+		name='user_profile'),
 
 	# Login page
 	url(r'^login[/]$', 'django.contrib.auth.views.login', 

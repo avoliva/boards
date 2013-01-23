@@ -52,6 +52,31 @@ class Links(models.Model):
 		return self.name
 
 
+class Profile(models.Model):
+
+	# self explanatory
+	user = models.OneToOneField(User)
+
+	# Tokens giving for contributing high quality links
+	contrib_tokens = models.IntegerField(default=0, editable=False)
+
+	# People can give you good tokens or bad tokens for whatever reason
+	good_tokens = models.IntegerField(default=0, editable=False)
+	bad_tokens = models.IntegerField(default=0, editable=False)
+
+	# A quote the user likes
+	quote = models.CharField(max_length=1000, null=True, blank=True)
+
+	# @todo
+	#picture = 
+
+	# @todo
+	#signature = model.CharField(max_length=)
+
+	def __unicode__(self):
+		return self.user.username
+
+
 class Vote(models.Model):
 
 	# User who voted for the link
@@ -74,9 +99,3 @@ class LinksCreateForm(ModelForm):
             'url': TextInput(attrs={'size': 60}),
             'description': Textarea(attrs={'cols': 100, 'rows': 20}),
         }
-
-class LoginForm(ModelForm):
-
-	class Meta:
-		model = User
-		fields = ('username', 'password')

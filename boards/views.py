@@ -104,3 +104,11 @@ class UserListView(ListView):
 		c = super(UserListView, self).get_context_data(**kwargs)
 		user = self.request.user
 		return c
+
+
+class UserDetailView(DetailView):
+
+	def get_context_data(self, **kwargs):
+		c = super(UserDetailView, self).get_context_data(**kwargs)
+		user = self.request.user
+		return c

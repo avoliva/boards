@@ -1,0 +1,137 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+  <title>http://localhost/ - adfsdfsdfsdfsdf</title>
+  <link rel="icon" href="https://static.endoftheinter.net/images/dealwithit.ico" type=
+  "image/x-icon" />
+  <link rel="apple-touch-icon-precomposed" href=
+  "https://static.endoftheinter.net/images/apple-touch-icon-ipad.png" />
+  <link rel="stylesheet" type="text/css" href="http://static.endoftheinter.net/style/nblue.css?22" />
+    <script type="text/javascript" src="templates/default/js/base.js?27"></script>
+</script>
+</head>
+
+<body class="regular">
+  <div class="body">
+	<div class="menubar">
+	<a href="/main.php">Home</a> | 
+	<a href="/archives.php">Archives</a> | 
+	<a href="/addlink.php">Add a link</a> | 
+	<a href="/linkme.php?l=random">Random link</a> | 
+	<a href="/links.php?mode=topvoted">Top voted links</a> | 
+	<a href="/links.php?mode=topvotedweek">Links of the week</a> |
+	<a href="/links.php?mode=new">New links</a><br />
+	<a href="//wiki.endoftheinter.net/index.php/Main_Page">Wiki</a> | 
+	<a href="/links.php?mode=all">All links</a> |
+	<a href="/links.php?mode=fav">Favorites</a> | 
+	<a href="/links.php?mode=search">Search</a> | 
+	<a href="/stats.php">Stats</a> | 
+	<a href="/showtopics.php?board=42">Boards</a> | 
+	<a href="/userlist.php">User List</a> | 
+	<a href="/logout.php">Logout</a> | 
+	<a href="//wiki.endoftheinter.net/index.php/Help:Rules">Help</a>
+</div>
+
+
+    <div style=
+    "position:fixed;z-index:999;background:red;width:1px;height:1px;bottom:45px!important;bottom:10000px;right:24px">
+    <!--a reminder, for all that we fought against. -->
+    </div>
+    <h1>{{ links.name }}</h1><br />
+    <br />
+    <a href="http://locahost" target="_blank">{{ links.name }}</a><br />
+    <br />
+    <b>Added by:</b> <a href=
+    "/profile.php?user=2182">{{ links.user.username }}</a><br />
+    <b>Date:</b> {{ links.pub_date }}<br />
+    <b>Code:</b> <a href="/linkme.php?l=SS101">SS65</a><br />
+    <b>Hits:</b> 1<br />
+    <b>Rating:</b> {{ links.votes }}/10 (based on {{links.votes_count }} votes)<br />
+    <b>Rank:</b> {{ links.rank }}<br />
+    <b>Share:</b> <a href="/ss.php?l=65">localhost/ss.php?l=SS65</a><br /><br />
+    <b>Category:</b> {{ links.category }}
+    <b>Description:</b> {{ links.description }}
+    {% if links.user.username not in user.username %}
+    <b>Vote:</b> 
+	    <a href="/boards/{{ links.id }}/?votes=0">0</a> 
+	    <a href="/boards/{{ links.id }}/?votes=1">1</a>
+	    <a href="/boards/{{ links.id }}/?votes=2">2</a> 
+	    <a href="/boards/{{ links.id }}/?votes=3">3</a> 
+	    <a href="/boards/{{ links.id }}/?votes=4">4</a> 
+	    <a href="/boards/{{ links.id }}/?votes=5">5</a> 
+	    <a href="/boards/{{ links.id }}/?votes=6">6</a> 
+	    <a href="/boards/{{ links.id }}/?votes=7">7</a> 
+	    <a href="/boards/{{ links.id }}/?votes=8">8</a> 
+	    <a href="/boards/{{ links.id }}/?votes=9">9</a> 
+	    <a href="/boards/{{ links.id }}/?votes=10">10</a> <br />
+   	<br /><b></b><br />
+
+    {% endif %}
+	<br />
+	<br />
+	<br />
+	<br />
+    <div class="userbar">
+      <a href="/profile.php?user=2182">{{ user.username }}(1)</a>:
+      <span id="userbar_pms" style="display:none"><a href=
+      "https://links.endoftheinter.net/inbox.php">Private Messages (<span id=
+      "userbar_pms_count">0</span>)</a> |</span> <a href=
+      "/postmsg.php?link=101">Post New Message</a> |
+      <a href="https://wiki.endoftheinter.net/index.php/Help:Rules">Help</a>
+    </div>
+
+    <div class="infobar">
+      Page 1 of <span>1</span> <span style="display:none">| <a href=
+      "/linkme.php?l=101&amp;page=2">Next
+      Page</a></span> <span style="display:none">| <a href=
+      "/linkme.php?l=101&amp;page=1">Last
+      Page</a></span>
+    </div>
+
+    <div class="infobar">
+      Page: 1
+    </div>
+    <br />
+    <br />
+				<small>
+				<b>Time Taken:</b> 0.1519s 
+			</small>
+
+
+        <form method="post" action="/postmsg.php" class="quickpost" id="u0_6" name="u0_6">
+      <input type="hidden" name="topic" value="" /><input type="hidden" name="h"
+      value="76f03" /><a href="#" class="quickpost-nub" id="u0_7" name=
+      "u0_7"><span class="open">+</span><span class="close">-</span></a>
+
+      <div class="quickpost-canvas">
+        <div id="u0_11"></div>
+
+        <div class="quickpost-body">
+          <b>Your Message</b><br />
+          <textarea id="u0_12" name="message">
+
+
+</textarea>
+<script type="text/javascript">
+
+//<![CDATA[
+          $("u0_12").value = "\n---\n"+unescape("");
+          //]]>
+          </script><br />
+          <!--<input type="submit" value="Preview Message" id="u0_8" name="preview" />-->
+          <input type="submit" value="Post Message" id="u0_9" name="submit" />
+          <!--<input type="button" value="Upload Image" id="u0_10" />-->
+        </div>
+      </div><a href="#" class="quickpost-grip" id="u0_9" name=
+      "u0_9">&nbsp;</a><script type="text/javascript">
+//<![CDATA[
+      onDOMContentLoaded(function(){new QuickPost(7758474, $("u0_6"), unescape(""), $("u0_7"), $("u0_8"), $("u0_9"), $("u0_10"), $("u0_11"), $("u0_12"))})
+      //]]>
+      
+      </script>
+    </form>
+  </div>
+
+  <div style="display: none;" id="hiddenlpsubmitdiv"></div>
+</body>
+</html>

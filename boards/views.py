@@ -40,15 +40,20 @@ class LinksDetailView(DetailView):
 				# Check if user voted for link already.
 				check = Vote.objects.get(voter=user, link=link)
 
+				# Fixes the ranking for the changed vote
 				link.rank = (link.rank - check.vote) + int(param)
 				check.vote = int(param)
 				check.save()
 				
 			except Exception as e:
+				# Creates a new vote object
 				Vote.objects.create(voter=user, link=link, vote=int(param))
+				
+				# Updates the link object
 				link.votes_count += 1
 				link.rank += int(param)
 
+			# Saves all changes to the link object
 			link.save()
 
 			# Get the links vote average.
@@ -60,45 +65,29 @@ class LinksDetailView(DetailView):
 
 
 class LinksCreateView(FormView):
+
+	# Link to the template
 	template_name = 'boards/link_create.html'
+
+	# The model that this form uses
 	form_class = LinksCreateForm
 
 	def form_valid(self, form):
+		
+		# Grabs the form data 
 		name = form.cleaned_data['name']
 		description = form.cleaned_data['description']
 		url = form.cleaned_data['url']
-		user = self.request.user
 		category = Category.objects.get(id=form.cleaned_data['category'].id)
-		link = Links(name=name, description=description, user=user, category=category, url=url)
-		link.save()
-		self.success_url = '/boards/'
+
+		# Grabs the current user
+		user = self.request.user
+
+		# Creates and saves the link
+		link = Links.objects.create(name=name, description=description,
+			user=user, category=category, url=url)
+
+		# Redirect URL on success
+		self.success_url = '/boards/' + str(link.id)
 
 		return super(LinksCreateView, self).form_valid(form)
-
-
-# class LoginView(FormView):
-# 	template_name = 'boards/login.html'
-# 	form_class = LoginForm
-
-# 	def form_valid(self, form):
-# 		print ("Got Here")
-# 		# username = form.cleaned_data['username']
-# 		# password = form.cleaned_data['password']
-# 		username = self.request.POST['username']
-# 		password = self.request.POST['password']
-# 		user = authenticate(username=username, password=password)
-# 		if user is not None:
-# 			# the password verified for the user
-# 			if user.is_active:
-# 				login(self.request, user)
-# 				print("User is valid, active and authenticated")
-# 			else:
-# 				print("The password is valid, but the account has been disabled!")
-# 		else:
-# 			# the authentication system was unable to verify the username and password
-# 			print("The username and password were incorrect.")
-
-# 		self.success_url = '/boards/'
-
-# 		return super(LoginView, self).form_valid(form)
-

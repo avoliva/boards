@@ -5,6 +5,8 @@ from django.template import RequestContext, loader, Context
 from django.core.urlresolvers import reverse
 from boards.models import Links, LinksCreateForm, Category, Vote
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+
 
 
 class LinksListView(ListView):
@@ -72,3 +74,31 @@ class LinksCreateView(FormView):
 		self.success_url = '/boards/'
 
 		return super(LinksCreateView, self).form_valid(form)
+
+
+# class LoginView(FormView):
+# 	template_name = 'boards/login.html'
+# 	form_class = LoginForm
+
+# 	def form_valid(self, form):
+# 		print ("Got Here")
+# 		# username = form.cleaned_data['username']
+# 		# password = form.cleaned_data['password']
+# 		username = self.request.POST['username']
+# 		password = self.request.POST['password']
+# 		user = authenticate(username=username, password=password)
+# 		if user is not None:
+# 			# the password verified for the user
+# 			if user.is_active:
+# 				login(self.request, user)
+# 				print("User is valid, active and authenticated")
+# 			else:
+# 				print("The password is valid, but the account has been disabled!")
+# 		else:
+# 			# the authentication system was unable to verify the username and password
+# 			print("The username and password were incorrect.")
+
+# 		self.success_url = '/boards/'
+
+# 		return super(LoginView, self).form_valid(form)
+

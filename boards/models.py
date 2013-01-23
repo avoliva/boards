@@ -74,3 +74,9 @@ class LinksCreateForm(ModelForm):
             'url': TextInput(attrs={'size': 60}),
             'description': Textarea(attrs={'cols': 100, 'rows': 20}),
         }
+
+class LoginForm(ModelForm):
+
+	class Meta:
+		model = User
+		fields = ('username', 'password')

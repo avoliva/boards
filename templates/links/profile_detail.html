@@ -13,44 +13,44 @@
 
     <table class="grid">
       <tr>
-        <th colspan="2">Current Information for {{ user.username }}</th>
+        <th colspan="2">Current Information for {{ user.get_profile }}</th>
       </tr>
 
       <tr>
         <td>User Name</td>
 
-        <td>{{ user.username }}(2)</td>
+        <td>{{ user.get_profile }}(2)</td>
       </tr>
 
       <tr>
         <td>User ID</td>
 
-        <td>{{ user.id }}</td>
+        <td>{{ user.get_profile.id }}</td>
       </tr>
 
       <tr>
         <td>Total Tokens </td>
 
-        <td>{{ profile.contrib_tokens }}</td>
+        <td>{{ user.get_profile.contrib_tokens }}</td>
       </tr>
 
       <tr>
         <td>Good Tokens</td>
 
-        <td>{{ profile.good_tokens }}</td>
+        <td>{{ user.get_profile.good_tokens }}</td>
       </tr>
 
       <tr>
         <td>Bad Tokens</td>
 
-        <td>{{ profile.bad_tokens }}</td>
+        <td>{{ user.get_profile.bad_tokens }}</td>
       </tr>
 
       <tr>
         <td>Contribution
         Karma</td>
 
-        <td>{{ profile.contrib_tokens }}</td>
+        <td>{{ user.get_profile.contrib_tokens }}</td>
       </tr>
 
       <tr>
@@ -74,7 +74,7 @@
       <tr>
         <td>Quote</td>
 			
-        <td>{{ profile.quote }}</td>
+        <td>{{ user.get_profile.quote }}</td>
       </tr>
 
       <tr>

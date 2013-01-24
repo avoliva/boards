@@ -1,6 +1,6 @@
 from django.views.generic import ListView, DetailView, FormView
 from links.models import Link, LinkCreateForm, Category, Vote, Profile,\
- MessageCreateForm
+ MessageCreateForm, Message
 from django.contrib.auth.models import User
 
 
@@ -96,6 +96,22 @@ class MessageCreateView(FormView):
 	template_name = 'links/message_create.html'
 
 	form_class = MessageCreateForm
+
+	def form_valid(self, form):
+		#link = Link.objects.get(id=self.kwargs.get('pk', None))
+		if self.request.GET.get('link') is not None:
+			print('lol')
+			param = self.request.GET.get('link')
+			user = self.request.user
+			content = form.cleaned_data['content']
+			try:
+				link = Link.objects.get(id=int(param))
+			except Exception as e:
+				print "error"
+			Message.objects.create(user=user, link=link, content=content)
+			self.success_url = '/links/' + str(link.id)
+
+			return super(MessageCreateView, self).form_valid(form)
 
 
 class UserListView(ListView):

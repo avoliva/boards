@@ -1,33 +1,33 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>{{ links.name }}</h1><br />
+    <h1>{{ link.name }}</h1><br />
     <br />
-    <a href="{{ links.url }}" target="_blank">{{ links.url }}</a><br />
+    <a href="{{ link.url }}" target="_blank">{{ link.url }}</a><br />
     <br />
     <b>Added by:</b> <a href=
-    "/profile.php?user=2182">{{ links.user.username }}</a><br />
-    <b>Date:</b> {{ links.pub_date }}<br />
+    "/profile.php?user=2182">{{ link.user.username }}</a><br />
+    <b>Date:</b> {{ link.pub_date }}<br />
     <b>Code:</b> <a href="/linkme.php?l=SS101">SS65</a><br />
     <b>Hits:</b> 1<br />
-    <b>Rating:</b> {{ links.votes }}/10 (based on {{links.votes_count }} votes)<br />
-    <b>Rank:</b> {{ links.rank }}<br />
+    <b>Rating:</b> {{ link.votes }}/10 (based on {{link.votes_count }} votes)<br />
+    <b>Rank:</b> {{ link.rank }}<br />
     <b>Share:</b> <a href="/ss.php?l=65">localhost/ss.php?l=SS65</a><br /><br />
-    <b>Category:</b> {{ links.category }}
-    <b>Description:</b> {{ links.description }}
-    {% ifnotequal links.user.id user.id %}
+    <b>Category:</b> {{ link.category }}
+    <b>Description:</b> {{ link.description }}
+    {% ifnotequal link.user.id user.id %}
     <b>Vote:</b> 
-	    <a href="/links/{{ links.id }}/?votes=0">0</a> 
-	    <a href="/links/{{ links.id }}/?votes=1">1</a>
-	    <a href="/links/{{ links.id }}/?votes=2">2</a> 
-	    <a href="/links/{{ links.id }}/?votes=3">3</a> 
-	    <a href="/links/{{ links.id }}/?votes=4">4</a> 
-	    <a href="/links/{{ links.id }}/?votes=5">5</a> 
-	    <a href="/links/{{ links.id }}/?votes=6">6</a> 
-	    <a href="/links/{{ links.id }}/?votes=7">7</a> 
-	    <a href="/links/{{ links.id }}/?votes=8">8</a> 
-	    <a href="/links/{{ links.id }}/?votes=9">9</a> 
-	    <a href="/links/{{ links.id }}/?votes=10">10</a> <br />
+	    <a href="/links/{{ link.id }}/?votes=0">0</a> 
+	    <a href="/links/{{ link.id }}/?votes=1">1</a>
+	    <a href="/links/{{ link.id }}/?votes=2">2</a> 
+	    <a href="/links/{{ link.id }}/?votes=3">3</a> 
+	    <a href="/links/{{ link.id }}/?votes=4">4</a> 
+	    <a href="/links/{{ link.id }}/?votes=5">5</a> 
+	    <a href="/links/{{ link.id }}/?votes=6">6</a> 
+	    <a href="/links/{{ link.id }}/?votes=7">7</a> 
+	    <a href="/links/{{ link.id }}/?votes=8">8</a> 
+	    <a href="/links/{{ link.id }}/?votes=9">9</a> 
+	    <a href="/links/{{ link.id }}/?votes=10">10</a> <br />
    	<br /><b></b><br />
 
     {% endifnotequal %}
@@ -38,61 +38,62 @@
     <div class="userbar">
       <a href="/profile.php?user=2182">{{ user.username }}(1)</a>:
       <span id="userbar_pms" style="display:none"><a href=
-      "https://links.endoftheinter.net/inbox.php">Private Messages (<span id=
+      "https://link.endoftheinter.net/inbox.php">Private Messages (<span id=
       "userbar_pms_count">0</span>)</a> |</span> <a href=
-      "/postmsg.php?link=101">Post New Message</a> |
+      "/links/post/?link={{ link.id }}">Post New Message</a> |
       <a href="https://wiki.endoftheinter.net/index.php/Help:Rules">Help</a>
     </div>
 
-    <div class="infobar">
+<div class="infobar">
       Page 1 of <span>1</span> <span style="display:none">| <a href=
       "/linkme.php?l=101&amp;page=2">Next
       Page</a></span> <span style="display:none">| <a href=
       "/linkme.php?l=101&amp;page=1">Last
       Page</a></span>
     </div>
+{% for message in link.topic.all %}
+    <div class="message-container" id="m1">
+      <div class="message-top">
+        <b>From:</b> <a href=
+        "/profile.php?user=2182">{{ message.user.username }}</a> |
+        <b>Posted:</b> {{ message.pub_date }} | <a href=
+        "/message.php?id=1&amp;topic=101&amp;r=0&amp;link=1">
+        Message Detail</a> | <a href=
+        "/postmsg.php?link=101&amp;quote=1"
+        onclick="return QuickPost.publish('quote', this);">Quote</a>
+      </div>
+
+      <table class="message-body">
+        <tbody>
+          <tr>
+            <td msgid="l,101,1@0" class="message">
+              {{ message.content }}
+<br/>
+---
+<br/>
+</td>
+
+            <td class="userpic">
+              <div class="userpic-holder">
+                <a href=
+                "/templates/default/images/LUEshi.jpg">
+                <span class="img-loaded" style="width:150px;height:131px" id=
+                "u0_6"><img src=
+                "/templates/default/images/LUEshi.jpg"
+                width="150" height="131" /></span></a>
+              </div>
+            </td>
+          </tr>
+        
+        </tbody>
+      </table>
+
+      {% endfor %}
 
     <div class="infobar">
       Page: 1
     </div>
     <br />
     <br />
-
-
-
-        <form method="post" action="/postmsg.php" class="quickpost" id="u0_6" name="u0_6">
-      <input type="hidden" name="topic" value="" /><input type="hidden" name="h"
-      value="76f03" /><a href="#" class="quickpost-nub" id="u0_7" name=
-      "u0_7"><span class="open">+</span><span class="close">-</span></a>
-
-      <div class="quickpost-canvas">
-        <div id="u0_11"></div>
-
-        <div class="quickpost-body">
-          <b>Your Message</b><br />
-          <textarea id="u0_12" name="message">
-
-
-</textarea>
-<script type="text/javascript">
-
-//<![CDATA[
-          $("u0_12").value = "\n---\n"+unescape("");
-          //]]>
-          </script><br />
-          <!--<input type="submit" value="Preview Message" id="u0_8" name="preview" />-->
-          <input type="submit" value="Post Message" id="u0_9" name="submit" />
-          <!--<input type="button" value="Upload Image" id="u0_10" />-->
-        </div>
-      </div><a href="#" class="quickpost-grip" id="u0_9" name=
-      "u0_9">&nbsp;</a><script type="text/javascript">
-//<![CDATA[
-      onDOMContentLoaded(function(){new QuickPost(7758474, $("u0_6"), unescape(""), $("u0_7"), $("u0_8"), $("u0_9"), $("u0_10"), $("u0_11"), $("u0_12"))})
-      //]]>
-      
-      </script>
-    </form>
-
-  <div style="display: none;" id="hiddenlpsubmitdiv"></div>
 
   {% endblock %}

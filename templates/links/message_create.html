@@ -1,4 +1,32 @@
-{% extends base.html %}
+{% extends "base.html" %}
 
 {% block content %}
+
+<h1>Post Message</h1>
+    <form action="" method="post">{% csrf_token %}
+      <span style="color: #ff0000">
+		  <b>The rules:</b> Don't be an ass hat. I will ban
+	  </span><br />
+      <br />
+            <b>Current Link:</b> 
+      <a href="/links/{{ link.id }}" 
+				target="_blank">{{ link.id }}</a><br />
+      (Click to open a new window with the current messages)<br />
+      <br />
+      <b>Your Message</b><br />
+      Enter your message text below.<br />
+      {{ form.content }}
+
+  <br />
+      <br />
+
+      <div>
+        <input type="submit" name="preview" value="Preview Message" /> 
+        <input type="submit" name="submit" value="Post Message" /> 
+        <!--<input type="button" value="Upload Image" onclick=
+			"new upload_form($('message'), this.parentNode, 7764709); 
+			this.style.display = 'none'" />-->
+        </div>
+    </form><br />
+    <br />
 {% endblock %}

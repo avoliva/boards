@@ -20,7 +20,7 @@ urlpatterns = patterns('',
 		name='link'),
 
 	# Post a message to a link
-	url(r'^(?P<pk>\d+)/post[/]$', login_required(MessageCreateView.as_view()),
+	url(r'^post[/]$', login_required(MessageCreateView.as_view()),
 		name='create_message'),
 
 	# Link Creation

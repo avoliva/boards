@@ -1,0 +1,52 @@
+ {% extends "base.html" %}
+
+ {% block content %}
+
+    <h1>Message History</h1>
+
+    <div class="userbar">
+      <a href="/links/profile/{{ user.id }}">{{ user.username }} ({{ user.get_profile.contrib_tokens }})</a>: <span id=
+      "userbar_pms" style="display:none"><a href="/inbox.php">Private Messages (<span id=
+      "userbar_pms_count">0</span>)</a> |</span> <a href=
+      "//wiki.endoftheinter.net/index.php/Help:Rules">Help</a>
+    </div>
+
+ <div class="infobar">
+      Page 1 of <span>1</span> <span style="display:none">| <a href=
+      "/history.php?page=2">Next Page</a></span> <span style="display:none">| <a href=
+      "/history.php?page=1">Last Page</a></span>
+    </div>
+
+    <table class="grid">
+      <tr>
+        <th>Category</th>
+
+        <th>Link</th>
+
+        <th>Msgs</th>
+
+        <th>Your Last Post</th>
+
+        <th>Last Post</th>
+      </tr>
+
+    {% for message in message_list.all %}
+	 <tr class="r0">
+        
+        <td>
+			{{ message.link.category.name }}
+        </td>
+        <td>
+			<a href=
+        "/links/{{ message.link.id }}">{{ message.link.name }}</a></td>
+
+        <td>TODO</td>
+		
+		<td>{{ message.pub_date }}</td>
+		
+        <td>TODO</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    {% endblock %}

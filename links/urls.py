@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, url
 from links.views import LinkListView, LinkDetailView, LinkCreateView, \
-UserListView, ProfileDetailView, MessageCreateView
+UserListView, ProfileDetailView, MessageCreateView, MessageDetailView, \
+MessageListView
 from links.models import Link
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta
@@ -47,6 +48,14 @@ urlpatterns = patterns('',
 	# User Profile
 	url(r'^profile/(?P<pk>\d+)[/]$', login_required(ProfileDetailView.as_view()), 
 		name='user_profile'),
+
+	# Posted Messages
+	url(r'^profile/(?P<pk>\d+)/posted[/]$', login_required(MessageListView.as_view()), 
+		name='posted_messages'),
+
+	# Message Detail
+	url(r'^message/(?P<pk>\d+)[/]$', login_required(MessageDetailView.as_view()), 
+		name='message_detail'),
 
 	# Login page
 	url(r'^login[/]$', 'django.contrib.auth.views.login', 

@@ -61,7 +61,6 @@ class LinkDetailView(DetailView):
 		return c
 
 
-
 class LinkCreateView(FormView):
 
 	# Link to the template
@@ -98,17 +97,15 @@ class MessageCreateView(FormView):
 	form_class = MessageCreateForm
 
 	def form_valid(self, form):
-		#link = Link.objects.get(id=self.kwargs.get('pk', None))
 		if self.request.GET.get('link') is not None:
-			print('lol')
 			param = self.request.GET.get('link')
 			user = self.request.user
 			content = form.cleaned_data['content']
 			try:
 				link = Link.objects.get(id=int(param))
+				Message.objects.create(user=user, link=link, content=content)
 			except Exception as e:
 				print "error"
-			Message.objects.create(user=user, link=link, content=content)
 			self.success_url = '/links/' + str(link.id)
 
 			return super(MessageCreateView, self).form_valid(form)
@@ -122,11 +119,27 @@ class UserListView(ListView):
 		return c
 
 
-# http://blog.bripkens.de/2011/04/adding-custom-profiles-to-the-django-user-model/
 class ProfileDetailView(DetailView):
 	model = Profile
 
 	def get_context_data(self, **kwargs):
 		c = super(ProfileDetailView, self).get_context_data(**kwargs)
+		user = self.request.user
+		return c
+
+
+class MessageDetailView(DetailView):
+	model = Message
+
+	def get_context_data(self, **kwargs):
+		c = super(MessageDetailView, self).get_context_data(**kwargs)
+		user = self.request.user
+		return c
+
+class MessageListView(ListView):
+	model = Message
+
+	def get_context_data(self, **kwargs):
+		c = super(MessageListView, self).get_context_data(**kwargs)
 		user = self.request.user
 		return c

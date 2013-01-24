@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Message Detail</h1><b>Link:</b> 
+    <a href="/links/{{ message.link.id }}/">{{ message.link.name }}</a>
+        <div class="message-container" id="m1">
+      <div class="message-top">
+        <b>From:</b> <a href="/links/profile/{{ message.user.id }}">{{ message.user.username }}</a> |
+        <b>Posted:</b> {{ message.pub_date }}
+      </div>
+
+      <table class="message-body">
+        <tr>
+          <td msgid="t,101,1@0" class="message">
+            {{ message.content }}
+<br/>---
+<br/>sdfsf</td>
+          <td class="userpic">
+            <div class="userpic-holder">
+              <a href=
+              "/templates/default/images/LUEshi.jpg">
+              <span class="img-placeholder" style="width:148px;height:150px" id=
+              "u0_1"></span></a>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    {% endblock %}

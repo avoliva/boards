@@ -1,0 +1,23 @@
+{% extends "boards_base.html" %}
+
+{% block content %}
+  <h1>Post Message</h1>
+  <form action="{{ request.get_full_path }}" method="post">{% csrf_token %}
+    <span style="color: #ff0000">
+      <b>The rules:</b> Don't be an ass hat. I will ban
+    </span>
+    <br />
+          <br />
+    <b>Your Message</b><br />
+    Enter your message text below.<br />
+    {{ form.content }}
+      <br />
+
+      <div>
+        <input type="submit" name="submit" value="Post Message" /> 
+        </div>
+    </form><br />
+    <br />
+
+  </div>
+{% endblock %}

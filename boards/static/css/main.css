@@ -1,0 +1,146 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * I just want to say that I hate you, Internet Explorer.  *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+body {
+  margin: 0px;
+  font-family: "Verdana", "Arial", sans-serif;
+}
+
+a {
+  color: #000000;
+}
+
+div.header {
+/*
+  background: url('/static/images/repeat.gif');
+  background-repeat: repeat-x;
+*/
+  border-bottom: 1px solid #000000;
+}
+
+div.header span {
+  display: block;
+  background: url('/static/images/logo.png');
+  background-repeat: repeat-x;
+  height: 110px!important;
+  height: 165px;
+  text-align: right;
+  padding-top: 55px;
+  padding-right: 10px;
+  font-family: "Arial", sans-serif;
+  font-weight: bold;
+  font-size: 10pt;
+  color: #202020;
+}
+
+/* Side menu stuff */
+form {
+  display: inline;
+  margin: 0px;
+  padding: 0px;
+}
+
+div.menu {
+  position: absolute;
+  width: 160px;
+  top: 1%;
+  border: 1px solid #000000;
+  font-size: 10pt;
+}
+
+div.menu span {
+  display: block;
+  background: #ec6307;
+  padding: 3px;
+  font-weight: bold;
+}
+
+div.menu span:hover {
+  background: #c05006;
+}
+
+div.menu form span:hover {
+  background: #ec6307;
+}
+
+div.menu a {
+  text-decoration: none;
+}
+
+small {
+  font-size: 7pt;
+  font-weight: normal;
+}
+
+div.menu label {
+  display: block;
+}
+
+div.menu input {
+  border: 1px solid #000000;
+  background: #eca678;
+  width: 100%;
+  padding: 1px 3px;  
+  margin-bottom: 3px;
+}
+
+div.menu input#password {
+  width: 95.3%;
+}
+
+div.menu input#username {
+  width: 95.3%;
+}
+
+/* Main content */
+div.content {
+  position: relative;
+  width: auto;
+  margin: 0px 120px 0px 160px;
+  padding: 5px;
+  z-index: 10;
+}
+
+div.content div.header {
+  background: url('/static/images/gradient.jpg');
+  background-repeat: no-repeat;
+  border: 1px solid #000000;
+  font-size: 14pt;
+  padding: 0px 3px;
+}
+
+/*
+div.content input {
+  border: 1px solid #000000;
+  background: #eca678;
+  width: 500px;
+  padding: 1px 3px;
+  margin-bottom: 3px;
+}
+
+div.content input.button {
+  width: auto;
+  padding: 0px;
+}
+*/
+div.content div.item {
+  padding: 5px 3px;
+}
+
+div.content div.item span.source {
+  font-weight: bold;
+}
+
+/* Side ads */
+div.ads {
+  position: absolute;
+  top: 165px;
+  right: 0px!important;
+  right: -1px;
+  width: 120px;
+}
+
+.footer {
+    text-align: center;
+    line-height: 3em;
+}

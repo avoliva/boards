@@ -1,0 +1,67 @@
+{% extends "boards_base.html" %}
+
+{% block content %}
+
+<h1>Message History</h1>
+    <div class="userbar">
+        <a href="{% url 'user_profile' user.id %}">{{ user.username }} (0)</a>: 
+        <span id="userbar_pms" style="display:none">
+            <a href="./inbox.php">Private Messages (<span id="userbar_pms_count">0</span>)</a> |
+        </span>
+        <a href="#" onclick="$('search_bar').style.display = ($('search_bar').style.display == 'none') ? 'block' : 'none'; return false;"> Search</a>
+    </div>
+
+    <script type="text/javascript">
+        //<![CDATA[
+            onDOMContentLoaded(function(){new PrivateMessageManager($("userbar_pms"), $("userbar_pms_count"), ["72057594037945962",0])})
+        //]]>
+    </script>
+
+    <div class="userbar" id="search_bar" style="display: none;">
+        Search:
+        <form style="display: inline;" action="history.php" method="get">
+            <input type="hidden" name="userid" value="18026" /> 
+            <input type="text" name="q" value="" size="25" /> &nbsp; 
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+    <div class="infobar">
+        Page 1 of <span>1</span> 
+        <span style="display:none">| 
+            <a href=".">Next Page</a>
+        </span> 
+        <span style="display:none">| 
+        <a href=".">Last Page</a></span>
+    </div>
+    <table class="grid">
+    <tr>
+        <th>Board</th>
+        <th>Topic</th>
+        <th>Msgs</th>
+        <th>Your Last Post</th>
+        <th>Last Post</th>
+    </tr>
+    {% for h in history %}
+            <td>
+            <a href="{% url 'topic_list' %}">Life, the Universe, and Everything</a>
+            </td>
+            <td>
+            <a href="{% url 'topic' h.topic.id %}">{{ h.topic }}</a>
+        </td>
+            <td>
+            {{ h.topic.message_count }}
+        </td>
+        
+        <td>{{ h.message.created }}</td>
+        <td>{{ h.topic.updated }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+    <div class="infobar">
+        Page: 1
+    </div>
+    <br />
+    <br />
+  </div>
+
+{% endblock %}

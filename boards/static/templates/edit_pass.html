@@ -1,0 +1,48 @@
+{% extends "boards_base.html" %}
+
+{% block content %}
+
+	<div style=
+		"position:fixed;z-index:999;background:red;width:1px;height:1px;bottom:45px!important;bottom:10000px;right:24px">
+		<!--a reminder, for all that we fought against. -->
+	</div>
+
+	<h1>Edit Profile</h1>
+	{% if old_pass %}
+	<h2><em>Old password is incorrect</em></h2>
+	{% endif %}
+	{% if new_pass %}
+	<h2><em>Passwords don't match</em></h2>
+	{% endif %}
+	{% if long %}
+	<h2><em>Password must be at least 8 characters</em></h2>
+	{% endif %}
+
+<br />
+	<form action="{{ request.get_full_path }}" method="post" autocomplete="off">{% csrf_token %}
+		<table class="grid">
+		<tr>
+			<th colspan="2">Change Password for {{ user.username }}</th>
+		</tr>
+		<tr>
+			<td>Confirm Your Current Password</td>
+			<td>{{ form.password }}</td>
+		</tr>
+		<tr>
+			<td>Enter A New Password</td>
+			<td>{{ form.new_password }}</td>
+		</tr>
+		<tr>
+			<td>Confirm Your New Password</td>
+			<td>{{ form.confirm_password }}</td>
+		</tr>
+		<tr>
+			<td colspan="2"><input type="submit" name="go" value="Make Changes" /></td>
+        	</tr>
+		</table>
+	</form>
+	<br />
+	<br />
+</div>
+
+{% endblock %}

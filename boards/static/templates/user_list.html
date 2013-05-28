@@ -1,0 +1,71 @@
+{% extends "boards_base.html" %}
+
+{% block content %}
+
+	<h1>User List</h1>
+	<form method="GET" action="">
+		<input type="text" name="user" value="" />
+		<input type="submit" value="Search" />
+	</form>
+	<br />
+	<div class="userbar">
+		<a href="{% url 'user_profile' user.id %}">{{ user.username }} (0)</a>: 
+		<span id="userbar_pms" style="display:none">
+			<a href=".">Private Messages (<span id="userbar_pms_count">0</span>)</a>
+		</span>
+	</div>
+
+	<script type="text/javascript">
+	//<![CDATA[
+		onDOMContentLoaded(function(){new PrivateMessageManager($("userbar_pms"), $("userbar_pms_count"), ["72057594037945962",0])})
+	//]]>
+	</script>
+
+	<div class="infobar">
+						Page 1 of <span>0</span> 
+					</div>
+	<table class="grid">
+	<tr>
+		<th>Username</th>
+		<th>Date Joined</th>
+		<th>Last Action</th>
+		<th>Karma</th>
+	</tr>
+	{% for u in user_list.all %}
+	<tr>
+		<td><a href="{% url 'user_profile' u.id %}">{{ u.username }}</a></td>
+		<td>{{ u.date_joined }}</td>
+        	<td>{{ u.last_login }}</td>
+        	<td>0</td>
+	</tr>
+	{% endfor %}
+	</table>
+	<div class="infobar">Page: 	</div>
+
+
+	</div>
+
+	<script type="text/javascript">
+		//<![CDATA[
+		function get_cozdiv() {
+			cozdiv = document.getElementById('cozpop');
+			if (cozdiv) return cozdiv;
+
+			cozdiv = document.createElement('img');
+			cozdiv.setAttribute('id','cozpop');
+			cozdiv.setAttribute( 'style', 'position:fixed;z-index:99999;top:30%;right:45%;margin:0;padding:0;border:#000 1px solid;background:#fff;width:10%;display:none;');
+			cozdiv.setAttribute('src','http://static.endoftheinter.net/images/cosby.jpg');
+			cozdiv.addEventListener('click', hide_cozpop, false);
+			document.body.appendChild(cozdiv);
+			return cozdiv;
+		}
+		function show_cozpop(e) {
+			if ('m'== String.fromCharCode(e.charCode).toLowerCase()) get_cozdiv().style.display = 'inline';
+		}
+		function hide_cozpop(e) {
+			get_cozdiv().style.display = 'none';
+		}
+		document.addEventListener('keypress', show_cozpop, false);
+	//]]>
+	</script>
+{% endblock %}

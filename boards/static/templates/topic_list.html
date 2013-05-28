@@ -1,0 +1,57 @@
+{% extends "boards_base.html" %}
+
+{% block content %}
+    <h1>Life, the Universe, and Everything</h1>
+
+    <div class="userbar">
+        <a href="{% url 'user_profile' user.id %}">{{ user.username }} (0)</a>: 
+        <span id="userbar_pms" style="display:none">
+            <a href=".">Private Messages (<span id="userbar_pms_count">0</span>)</a> |
+        </span> 
+        <a href="{% url 'topic_create' %}">Create New Topic</a>
+    </div>
+
+
+
+    <div class="infobar">
+      Page 1 of <span>1</span> <span style="display:none">| <a href=
+      ".">
+      Next Page</a></span> <span style="display:none">| <a href=
+      ".">
+      Last Page</a></span>
+    </div>
+
+   <table class="grid">
+        <tr>
+            <th>Topic</th>
+            <th>Created By</th>
+            <th>Msgs</th>
+            <th>Last Post</th>
+        </tr>
+        {% for topic in topic_list.all %}
+        <tr>
+            <td>
+                <a href="{% url 'topic' topic.id %}">{{ topic.title }}</a>
+            </td>
+                <td>
+                <a href="{% url 'user_profile' topic.user.id %}">{{ topic.user }}</a>
+            </td>
+            <td>
+                {{ topic.message_count }}
+            </td>
+            <td>
+                {{ topic.updated }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="infobar">
+      Page: 1
+    </div><br />
+    <br />
+
+  <div style="display: none;" id="hiddenlpsubmitdiv"></div>
+
+  {% endblock %}
+

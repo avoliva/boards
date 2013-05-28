@@ -1,0 +1,29 @@
+{% extends "boards_base.html" %}
+
+{% block content %}
+  <h1>Post Message</h1>
+  <form action="{% url 'topic_create' %}" method="post">{% csrf_token %}
+    <span style="color: #ff0000">
+      <b>The rules:</b> Don't be an ass hat. I will ban
+    </span>
+    <br />
+          <br />
+      To create a new topic, enter a title for the topic below and create the first message.<br />
+      {{ form.title }}<br />
+      (Between 5 and 80 characters in length)<br /><br />
+    <b>Your Message</b><br />
+    Enter your message text below.<br />
+    {{ form.content }}
+      <br />
+
+      <div>
+        <input type="submit" name="submit" value="Post Message" /> 
+        <!--<input type="button" value="Upload Image" onclick=
+      "new upload_form($('message'), this.parentNode, 7764709); 
+      this.style.display = 'none'" />-->
+        </div>
+    </form><br />
+    <br />
+
+  </div>
+{% endblock %}

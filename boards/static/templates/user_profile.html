@@ -1,0 +1,126 @@
+{% extends "boards_base.html" %}
+
+{% block content %}
+
+    <h1>User Information Page</h1>
+
+    <div class="userbar">
+      <a href="{% url 'user_profile' user.id %}">{{ user.username }} (0)</a>: <span id=
+      "userbar_pms" style="display:none"><a href=".">Private Messages (<span id=
+      "userbar_pms_count">0</span>)</a>
+    </div>
+
+    <table class="grid">
+      <tr>
+        <th colspan="2">Current Information for {{ profile.username }}</th>
+      </tr>
+
+      <tr>
+        <td>User Name</td>
+
+        <td>{{ profile.username }}(2)</td>
+      </tr>
+
+      <tr>
+        <td>User ID</td>
+
+        <td>{{ profile.id }}</td>
+      </tr>
+
+      <tr>
+        <td>Total Tokens </td>
+
+        <td>{{ profile.contrib_tokens }}</td>
+      </tr>
+
+      <tr>
+        <td>Good Tokens</td>
+
+        <td>{{ profile.good_tokens }}</td>
+      </tr>
+
+      <tr>
+        <td>Bad Tokens</td>
+
+        <td>{{ profile.bad_tokens }}</td>
+      </tr>
+
+      <tr>
+        <td>Contribution
+        Karma</td>
+
+        <td>{{ profile.contrib_tokens }}</td>
+      </tr>
+
+      <tr>
+        <td>Account Created</td>
+
+        <td>{{ profile.date_joined }}</td>
+      </tr>
+
+      <tr>
+        <td>Last Active</td>
+
+        <td>{{ profile.last_login }}</td>
+      </tr>
+
+      <tr>
+        <td>Signature</td>
+
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>Quote</td>
+            
+        <td>{{ profile.quote }}</td>
+      </tr>
+
+      <tr>
+        <td>Email Address</td>
+            
+        <td>{{ profile.email }}</td>
+      </tr>
+
+      <tr>
+        <td>Instant Messaging</td>
+            
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>Picture</td>
+
+        <td><a target="_blank" imgsrc=
+        "/static/images/LUEshi.jpg"
+        href=
+        "/static/images/LUEshi.jpg">
+        <span class="img-placeholder" style="width:395px;height:400px" id=
+        "u0_1"></span><script type="text/javascript">
+//<![CDATA[
+        onDOMContentLoaded(function(){new ImageLoader($("u0_1"), "\/templates\/default\/images\/LUEshi.jpg", 395, 400)})
+        //]]>
+        </script></a></td>
+      </tr>
+      <tr>
+        <th colspan="2">More Options</th>
+      </tr>
+      {% if user == profile %}
+      <tr>
+        <td colspan="2"><a href="{% url 'edit_pass' %}">Edit My Password</a></td>
+      </tr>
+      
+      <tr>
+        <td colspan="2"><a href="{% url 'history' %}">View My Posted Messages</a></td>
+      </tr>
+<!--       <tr>
+        <td colspan="2"><a href="loser.php?user=2182">View My Stats</a></td>
+      </tr> -->
+<!--       {% else %}
+      <tr>
+        <td colspan="2"><a href="loser.php?user=2182">View {{ profile.username }}'s Stats</a></td>
+      </tr> 
+      {% endif %} -->
+    </table><br />
+    <br />
+{% endblock %}

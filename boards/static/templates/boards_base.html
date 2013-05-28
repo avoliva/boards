@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>{% block title %} Links Is Back {% endblock %}</title>
+<link rel="icon" href="//static.endoftheinter.net/images/dealwithit.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon-precomposed" href="//static.endoftheinter.net/images/apple-touch-icon-ipad.png" />
+  <link rel="stylesheet" type="text/css" href="https://boards.codeatom.org/static/css/nblue.css?18" />
+  <script type="text/javascript" src="https://boards.codeatom.org/static/js/base.js?27">
+</script>
+<script type="text/javascript" src="https://boards.codeatom.org/static/js/jquery.min.js" charset="utf-8"></script>
+</head>
+<body class="regular">
+  <div class="body">
+    <div class="menubar">
+        <a href="/">Home</a> | 
+        <a href="{% url 'topic_list' %}">Boards</a> | 
+        <a href="{% url 'link_create' %}">Add a link</a> | 
+        <a href="{% url 'top_links' %}">Top voted links</a> | 
+        <a href="{% url 'top_week' %}">Links of the week</a> |
+        <a href="{% url 'links' %}">New links</a><br />
+        <a href="{% url 'all_links' %}">All links</a> |
+        <a href="{% url 'user_list' %}">User List</a> | 
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+
+    <div style=
+    "position:fixed;z-index:999;background:red;width:1px;height:1px;bottom:45px!important;bottom:10000px;right:24px">
+    <!--a reminder, for all that we fought against. -->
+    </div>
+
+
+
+{% block content %}{% endblock %}
+
+  </div>
+
+</body>
+</html>

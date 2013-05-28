@@ -1,0 +1,9 @@
+<html>
+   <div class="header">Register</div>
+  <form action="{% url 'register' %}" method="post">{% csrf_token %}
+  <div class="item"><span class="source">Username: </span><span class="link">{{ form.username }}</span></div>
+  <div class="item"><span class="source">Password: </span><span class="link">{{ form.password }}</span></div>
+  <input type="submit" class="addlink" value="Register">
+  </form> 
+
+</html>

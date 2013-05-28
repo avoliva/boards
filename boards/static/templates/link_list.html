@@ -1,0 +1,69 @@
+{% extends "boards_base.html" %}
+
+{% block content %}
+    <h1>Links</h1>
+
+    <div class="userbar">
+      <a href="{% url 'user_profile' user.id %}">{{ user.username }}(1)</a>
+      <span id="userbar_pms" style="display:none"><a href=
+      ".">Private Messages (<span id=
+      "userbar_pms_count">0</span>)</a> 
+    </div>
+
+
+    <div class="infobar">
+      Page 1 of <span>1</span> <span style="display:none">| <a href=
+      ".">
+      Next Page</a></span> <span style="display:none">| <a href=
+      ".">
+      Last Page</a></span>
+    </div>
+
+    <table class="grid">
+      <tbody>
+        <tr>
+          <th><a href=
+          "{% url 'sort_title' %}">
+          Title</a></th>
+          
+          <th><a href=
+          "{% url 'sort_author' %}">
+          Added By:</a></th>
+
+          <th><a href=
+          "{% url 'sort_date' %}">
+          Date</a></th>
+
+          <th><a href=
+          "{% url 'sort_rating' %}">
+          Rating</a></th>
+
+          <th><a href=
+          "{% url 'top_links' %}">
+          Rank</a></th>
+        </tr>
+        {% for links in link_list.all %}
+        <tr class="r0">
+          <td><a href="{% url 'link' links.id %}/">{{ links.title }} </a></td>
+            
+          <td><a href="{% url 'user_profile' links.user.id %}">{{ links.user.username}} </a></td>
+          <td>{{ links.created }}</td>
+
+          <td>{{ links.votes }}</td>
+
+          <td>{{ links.rank }}</td>
+
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="infobar">
+      Page: 1
+    </div><br />
+    <br />
+
+  <div style="display: none;" id="hiddenlpsubmitdiv"></div>
+
+  {% endblock %}
+

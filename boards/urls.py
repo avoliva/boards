@@ -32,13 +32,13 @@ urlpatterns = patterns(
     url(r'^$', login_required(views.TopicListView.as_view()), name='topic_list'),
     url(r'^topic/(?P<pk>\d+)[/]', login_required(views.TopicDetailView.as_view()), name='topic'),
     url(r'^tcreate[/]', login_required(views.TopicCreateView.as_view()), name='topic_create'),
-    url(r'^mcreate/', views.MessageCreateView.as_view(), name='message_create'),
+    url(r'^mcreate/',  login_required(views.MessageCreateView.as_view()), name='message_create'),
 
     # profile options
-    url(r'^user/(?P<pk>\d+)[/]$', views.ProfileView.as_view(), name='user_profile'),
-    url(r'^user[/]$', views.UserListView.as_view(), name='user_list'),
-    url(r'^edit_pass/', views.PasswordResetView.as_view(), name='edit_pass'),
-    url(r'^history/', views.TopicHistoryView.as_view(), name='history'),
+    url(r'^user/(?P<pk>\d+)[/]$',  login_required(views.ProfileView.as_view()), name='user_profile'),
+    url(r'^user[/]$',  login_required(views.UserListView.as_view()), name='user_list'),
+    url(r'^edit_pass/',  login_required(views.PasswordResetView.as_view()), name='edit_pass'),
+    url(r'^history/',  login_required(views.TopicHistoryView.as_view()), name='history'),
 
     #links
     url(r'^links[/]$', login_required(views.LinkListView.as_view(

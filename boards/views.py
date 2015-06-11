@@ -70,18 +70,27 @@ class Reddit(object):
             if item.get('kind') is None:
                 continue
             if not item.get("kind") == "t1":
-                continue
-            data = item.get('data')
+                if item.get("kind") == "t3":
+                    data = item.get('data')
+                    # import ipdb; ipdb.set_trace()
+                    data['body_html'] = data['selftext_html']
+                    self_post = True
+                else:
+                    continue
+            else:
+                self_post = False
+                data = item.get('data')
             comment = self.load_comment(data, level)
             comment.content = '<br/><br/>'.join(
                 [str(x.contents[0]) for x in 
                 BeautifulSoup(su.unescape(comment.content)).find('div').findAll('p')])
             # import ipdb; ipdb.set_trace()
-            if comment.parent.split('_')[0] == 't1':
+            if comment.parent and comment.parent.split('_')[0] == 't1':
                 comment.parent_content = next((l for l in comments if l.id == comment.parent), None).content
-            if (comment.user is not None):
+            if comment.user is not None:
                 comments.append(comment)
-                self.add_replies(comments,data,level+1)
+                if not self_post:
+                    self.add_replies(comments,data,level+1)
 
         return comments
 
@@ -116,18 +125,21 @@ class Reddit(object):
             'User-Agent': 'python/requests',
         }
         # https://www.reddit.com/r/gaming/comments/39d2hi/star_wars_battlefront_exclusive_cover/.json
-        posts = requests.get(
+        listings = requests.get(
             'https://www.reddit.com/r/{}/comments/{}/{}/.json'.format(
                 subreddit, topic_id, title),
             headers=headers
         )
         comments = list()
-        r = posts.json()[1]['data']['children']
-
-        comments = self.process(comments, r, 0)
+        posts = listings.json()
+        if posts[0]['data']['children'][0]['data']['selftext_html']:
+            r = posts[0]['data']['children']
+            comments = self.process([], r, 0)
+        r = posts[1]['data']['children']
+        comments += self.process([], r, 0)
         # import ipdb; ipdb.set_trace()
         return dict(comments=comments,
-            title=posts.json()[0]['data']['children'][0]['data']['title'])
+            title=posts[0]['data']['children'][0]['data']['title'])
 
 
 class Subreddit(TemplateView):

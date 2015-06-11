@@ -73,6 +73,11 @@ urlpatterns = patterns(
     # All links
     url(r'^links/all[/]$', login_required(views.LinkListView.as_view()), name='all_links'),
 
+    # yETIit
+    url(r'^r/(?P<subreddit>\w+)[/]$', login_required(views.Subreddit.as_view()), name='subreddit'),
+    url(r'^r/(?P<subreddit>\w+)/(?P<subreddit_id>\w+)/(?P<subreddit_title>\w+)[/]$',
+        login_required(views.SubredditPosts.as_view()), name='subreddit_posts'),
+
 )
 
 

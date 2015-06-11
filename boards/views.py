@@ -11,6 +11,139 @@ from boards import models
 import datetime
 from django.contrib.auth import models as auth
 from BeautifulSoup import BeautifulSoup
+import requests
+
+"""
+jsonmapping:
+
+listings:
+in data -> children[]
+
+subreddit: board name
+score: rating
+num_comments: 
+authro: 
+thumbnail:
+permalink: link to reddit forum
+created: time crated
+url: topic link
+title:
+created_utc
+ups:
+downs:
+"""
+
+class Comment(object):
+
+    def __init__(self, html, author, 
+                 points, postedOn, level):
+        self.html =html
+        self.author = author
+        self.points = points
+        self.postedOn = postedOn
+        self.level = level
+
+
+class Reddit(object):
+
+    def __init__(self, u=None):
+        self.url = u
+
+    def load_comment(self, data, level):
+        comment = Comment(
+            html=data.get('body_html'),
+            author=data.get('author'),
+            points=data.get('score'),
+            postedOn=data.get('created_utc'),
+            level=level
+        )
+        return comment
+
+    def process(self, comments, c, level):
+        for item in c:
+            if item.get('kind') is None:
+                continue
+            if not item.get("kind") == "t1":
+                continue
+            data = item.get('data')
+            comment = self.load_comment(data, level)
+            if (comment.author is not None):
+                comments.append(comment)
+                self.add_replies(comments,data,level+1)
+
+        return comments
+
+    def add_replies(self, comments, parent, level):
+        if not parent.get("replies"):
+            return
+        r = parent['replies']['data']['children']
+        self.process(comments, r, level)
+
+    def load_subreddit_list(self, subreddit):
+        headers = {
+            'User-Agent': 'python/requests',
+        }
+        listing = requests.get('https://reddit.com/r/{}.json'.format(subreddit), headers=headers)
+        # import ipdb; ipdb.set_trace()
+        x = [dict(
+            subreddit=c['data']['subreddit'],
+            score=c['data']['score'],
+            message_count=c['data']['score'],
+            user23=c['data']['author'],
+            permalink=c['data']['permalink'],
+            created_utc=c['data']['created_utc'],
+            url=c['data']['url'],
+            title=c['data']['title'],
+            ups=c['data']['ups'],
+            downs=c['data']['downs']
+        ) for c in listing.json()['data']['children']]
+        return x
+
+    def load_subreddit_posts(self, subreddit, topic_id, title):
+        headers = {
+            'User-Agent': 'python/requests',
+        }
+        # https://www.reddit.com/r/gaming/comments/39d2hi/star_wars_battlefront_exclusive_cover/.json
+        posts = requests.get(
+            'https://www.reddit.com/r/{}/comments/{}/{}/.json'.format(
+                subreddit, topic_id, title),
+            headers=headers
+        )
+        comments = list()
+        r = posts.json()[1]['data']['children']
+
+        comments = self.process(comments, r, 0)
+        import ipdb; ipdb.set_trace()
+        return comments
+
+
+class Subreddit(TemplateView):
+
+    template_name = 'subreddit.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(Subreddit, self).get_context_data(**kwargs)
+        reddit = Reddit()
+        listing = reddit.load_subreddit_list(context['subreddit'])
+        # import ipdb; ipdb.set_trace()
+        context['topic_list'] = listing
+        # context['latest_articles'] = Article.objects.all()[:5]
+        return context
+
+
+class SubredditPosts(TemplateView):
+
+    template_name = 'subreddit_posts.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(SubredditPosts, self).get_context_data(**kwargs)
+        reddit = Reddit()
+        listing = reddit.load_subreddit_posts(context['subreddit'],
+            context['subreddit_id'], context['subreddit_title'])
+        # import ipdb; ipdb.set_trace()
+        context['topic_list'] = listing
+        # context['latest_articles'] = Article.objects.all()[:5]
+        return context
 
 
 class UserListView(ListView):
@@ -77,6 +210,13 @@ class MessageCreateView(FormView):
                 return HttpResponse("Topic doensn't exist. <a href='/'>Go Home</a>")
             content = form.cleaned_data['content']
             user = self.request.user
+
+
+
+
+
+            0
+
             m = models.Message.objects.create(user=user, topic=topic, content=content)
             m.save()
             topic.updated = datetime.datetime.now()

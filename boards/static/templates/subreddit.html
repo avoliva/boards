@@ -1,0 +1,50 @@
+{% extends "boards_base.html" %}
+
+{% block content %}
+    <h1>Life, the Universe, and Everything</h1>
+
+
+
+
+    <div class="infobar">
+      Page 1 of <span>1</span> <span style="display:none">| <a href=
+      ".">
+      Next Page</a></span> <span style="display:none">| <a href=
+      ".">
+      Last Page</a></span>
+    </div>
+
+   <table class="grid">
+        <tr>
+            <th>Topic</th>
+            <th>Created By</th>
+            <th>Msgs</th>
+            <th>Last Post</th>
+        </tr>
+        {% for topic in topic_list %}
+        <tr>
+            <td>
+                <a href="">{{ topic.title }}</a>
+            </td>
+                <td>
+                <a href="">{{ topic.user }}</a>
+            </td>
+            <td>
+                {{ topic.message_count }}
+            </td>
+            <td>
+                {{ topic.updated }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="infobar">
+      Page: 1
+    </div><br />
+    <br />
+
+  <div style="display: none;" id="hiddenlpsubmitdiv"></div>
+
+  {% endblock %}
+

@@ -12,6 +12,7 @@ import datetime
 from django.contrib.auth import models as auth
 from BeautifulSoup import BeautifulSoup
 import requests
+from xml.sax import saxutils as su
 
 """
 jsonmapping:
@@ -37,10 +38,10 @@ class Comment(object):
 
     def __init__(self, html, author, 
                  points, postedOn, level):
-        self.html =html
-        self.author = author
+        self.content =html
+        self.user = author
         self.points = points
-        self.postedOn = postedOn
+        self.created = postedOn
         self.level = level
 
 
@@ -67,7 +68,11 @@ class Reddit(object):
                 continue
             data = item.get('data')
             comment = self.load_comment(data, level)
-            if (comment.author is not None):
+            comment.content = '<br/><br/>'.join(
+                [str(x.contents[0]) for x in 
+                BeautifulSoup(su.unescape(comment.content)).find('div').findAll('p')])
+            # import ipdb; ipdb.set_trace()
+            if (comment.user is not None):
                 comments.append(comment)
                 self.add_replies(comments,data,level+1)
 
@@ -89,7 +94,7 @@ class Reddit(object):
             subreddit=c['data']['subreddit'],
             score=c['data']['score'],
             message_count=c['data']['score'],
-            user23=c['data']['author'],
+            user=c['data']['author'],
             permalink=c['data']['permalink'],
             created_utc=c['data']['created_utc'],
             url=c['data']['url'],
@@ -113,7 +118,7 @@ class Reddit(object):
         r = posts.json()[1]['data']['children']
 
         comments = self.process(comments, r, 0)
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         return comments
 
 
@@ -141,7 +146,7 @@ class SubredditPosts(TemplateView):
         listing = reddit.load_subreddit_posts(context['subreddit'],
             context['subreddit_id'], context['subreddit_title'])
         # import ipdb; ipdb.set_trace()
-        context['topic_list'] = listing
+        context['message'] = listing
         # context['latest_articles'] = Article.objects.all()[:5]
         return context
 

@@ -36,13 +36,16 @@ downs:
 
 class Comment(object):
 
-    def __init__(self, html, author, 
-                 points, postedOn, level):
+    def __init__(self, id, html, author, 
+                 points, postedOn, level, parent=None):
+        self.id = id
         self.content =html
         self.user = author
         self.points = points
         self.created = postedOn
         self.level = level
+        self.parent = parent
+        self.parent_content = None
 
 
 class Reddit(object):
@@ -52,11 +55,13 @@ class Reddit(object):
 
     def load_comment(self, data, level):
         comment = Comment(
+            id=data.get('name'),
             html=data.get('body_html'),
             author=data.get('author'),
             points=data.get('score'),
             postedOn=data.get('created_utc'),
-            level=level
+            level=level,
+            parent=data.get('parent_id')
         )
         return comment
 
@@ -72,6 +77,8 @@ class Reddit(object):
                 [str(x.contents[0]) for x in 
                 BeautifulSoup(su.unescape(comment.content)).find('div').findAll('p')])
             # import ipdb; ipdb.set_trace()
+            if comment.parent.split('_')[0] == 't1':
+                comment.parent_content = next((l for l in comments if l.id == comment.parent), None).content
             if (comment.user is not None):
                 comments.append(comment)
                 self.add_replies(comments,data,level+1)
@@ -100,7 +107,7 @@ class Reddit(object):
             url=c['data']['url'],
             title=c['data']['title'],
             ups=c['data']['ups'],
-            downs=c['data']['downs']
+            downs=c['data']['downs'],
         ) for c in listing.json()['data']['children']]
         return x
 
@@ -119,7 +126,8 @@ class Reddit(object):
 
         comments = self.process(comments, r, 0)
         # import ipdb; ipdb.set_trace()
-        return comments
+        return dict(comments=comments,
+            title=posts.json()[0]['data']['children'][0]['data']['title'])
 
 
 class Subreddit(TemplateView):
@@ -145,8 +153,10 @@ class SubredditPosts(TemplateView):
         reddit = Reddit()
         listing = reddit.load_subreddit_posts(context['subreddit'],
             context['subreddit_id'], context['subreddit_title'])
+        comments = listing['comments']
+        context['title'] = listing['title']
         # import ipdb; ipdb.set_trace()
-        context['message'] = listing
+        context['message'] = comments
         # context['latest_articles'] = Article.objects.all()[:5]
         return context
 

@@ -1,7 +1,7 @@
 {% extends "boards_base.html" %}
 
 {% block content %}
-    <h1>Life, the Universe, and Everything</h1>
+    <h1>{{subreddit}}</h1>
 
 
 
@@ -24,7 +24,7 @@
         {% for topic in topic_list %}
         <tr>
             <td>
-                <a href="">{{ topic.title }}</a>
+                <a href="{{topic.url}}">{{ topic.title }}</a>  [<a href="{{topic.permalink}}">comments</a>]
             </td>
                 <td>
                 <a href="">{{ topic.user }}</a>

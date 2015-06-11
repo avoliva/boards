@@ -1,7 +1,7 @@
 {% extends "boards_base.html" %}
 {% block content %}
-  <h1>Life, the Universe, and Everything</h1>
-  <h2>{{ message.0.topic.title }}</h2>
+  <h1><a href="/r/{{subreddit}}">{{subreddit}}</a></h1>
+  <h2>{{title}}</h2>
   <div class="infobar">
     Page 1 of <span>1</span> <span style="display:none">| <a href=
     ".">
@@ -29,6 +29,10 @@
   <table class="message-body">
     <tr>
       <td msgid="t,{$topic_id},{$table.message_id}@{$table.revision_id}" class="message">
+        {% if m.parent_content %}
+            <em style="font-style:italic !imporant;">{{ m.parent_content | safe }}</em>
+            <br/></br>
+        {% endif %}
         {{ m.content | safe }}
       </td>
       <td class="userpic">

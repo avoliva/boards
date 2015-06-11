@@ -1,6 +1,12 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist
-from django.views.generic import UpdateView, TemplateView, FormView, DetailView, ListView
+from django.views.generic import (
+    UpdateView,
+    TemplateView,
+    FormView,
+    DetailView,
+    ListView
+)
 from boards import models
 import datetime
 from django.contrib.auth import models as auth
@@ -54,11 +60,13 @@ class MessageCreateView(FormView):
     def get(self, request, *args, **kwargs):
         if request.GET.get('output') is not None:
             import json
-            d = {}
-            d['id'] = request.GET.get('id')
-            d['topic'] = request.GET.get('topic')
-            d['message'] = models.Message.objects.get(pk=d['id']).content
-            return HttpResponse(json.dumps(d))
+            _id = request.GET.get('id')
+            jobj = json.dumps(dict(
+                id=_id,
+                topic=request.GET.get('topic'),
+                message=models.Message.objects.get(pk=_id).content
+            ))
+            return HttpResponse(jobj)
         return super(MessageCreateView, self).get(request)
 
     def form_valid(self, form):
@@ -128,6 +136,8 @@ class TopicDetailView(UpdateView):
     model = models.Topic
 
     template_name = 'topic_detail.html'
+
+    fields = ['user','title']
 
     def get_context_data(self, **kwargs):
         context = super(TopicDetailView, self).get_context_data(**kwargs)

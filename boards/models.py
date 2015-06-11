@@ -91,7 +91,7 @@ class TopicCreateForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'size': 60}),
         }
 
-    content = forms.CharField("Message", min_length=3, widget=forms.Textarea(attrs={'rows': 20, 'cols': 100, 'class': 'input-xxlarge'}))
+    content = forms.CharField(min_length=3, widget=forms.Textarea(attrs={'rows': 20, 'cols': 100, 'class': 'input-xxlarge'}))
 
 
 class PasswordReset(forms.ModelForm):
@@ -103,9 +103,9 @@ class PasswordReset(forms.ModelForm):
             'password': forms.PasswordInput(attrs={'size': 60}),
         }
 
-    new_password = forms.CharField("New Password", min_length=8, widget=forms.PasswordInput(attrs={'size': 60}))
+    new_password = forms.CharField( min_length=8, widget=forms.PasswordInput(attrs={'size': 60}))
 
-    confirm_password = forms.CharField("New Password", min_length=8, widget=forms.PasswordInput(attrs={'size': 60}))
+    confirm_password = forms.CharField(min_length=8, widget=forms.PasswordInput(attrs={'size': 60}))
 
 
 class Category(Timestamp):

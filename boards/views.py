@@ -156,7 +156,7 @@ class Subreddit(TemplateView):
         listing = reddit.load_subreddit_list(context['subreddit'], count, after)
         # import ipdb; ipdb.set_trace()
         context['topic_list'] = listing
-        context['next_page'] = '?count={}&after={}'.format(int(count) += 25, listing[-1]['name'])
+        context['next_page'] = '?count={}&after={}'.format(int(count) + 25, listing[-1]['name'])
         # context['latest_articles'] = Article.objects.all()[:5]
         return context
 

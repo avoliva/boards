@@ -100,11 +100,12 @@ class Reddit(object):
         r = parent['replies']['data']['children']
         self.process(comments, r, level)
 
-    def load_subreddit_list(self, subreddit):
+    def load_subreddit_list(self, subreddit, count=25, after=None):
         headers = {
             'User-Agent': 'python/requests',
         }
-        listing = requests.get('https://reddit.com/r/{}.json'.format(subreddit), headers=headers)
+        listing = requests.get('https://reddit.com/r/{}.json?count={}&after={}'.format(
+            subreddit, count, after), headers=headers)
         # import ipdb; ipdb.set_trace()
         x = [dict(
             subreddit=c['data']['subreddit'],
@@ -117,6 +118,7 @@ class Reddit(object):
             title=c['data']['title'],
             ups=c['data']['ups'],
             downs=c['data']['downs'],
+            name=c['data']['name'],
         ) for c in listing.json()['data']['children']]
         return x
 
@@ -152,6 +154,7 @@ class Subreddit(TemplateView):
         listing = reddit.load_subreddit_list(context['subreddit'])
         # import ipdb; ipdb.set_trace()
         context['topic_list'] = listing
+        context['next_page'] = '?count=25&after={}'.format(listing[-1]['name'])
         # context['latest_articles'] = Article.objects.all()[:5]
         return context
 
@@ -163,8 +166,10 @@ class SubredditPosts(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(SubredditPosts, self).get_context_data(**kwargs)
         reddit = Reddit()
+        count = self.request.GET.get('count', 25)
+        after = self.request.GET.get('after', None)
         listing = reddit.load_subreddit_posts(context['subreddit'],
-            context['subreddit_id'], context['subreddit_title'])
+            context['subreddit_id'], context['subreddit_title'], count, after)
         comments = listing['comments']
         context['title'] = listing['title']
         # import ipdb; ipdb.set_trace()

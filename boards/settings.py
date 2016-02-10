@@ -119,7 +119,8 @@ ROOT_URLCONF = 'boards.urls'
 WSGI_APPLICATION = 'boards.wsgi.application'
 
 TEMPLATE_DIRS = (
-    '/home/avoliva/Code/boards/boards/static/templates',
+    # '/home/avoliva/Code/boards/boards/static/templates',
+    os.path.join(STATIC_ROOT, 'templates'),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.

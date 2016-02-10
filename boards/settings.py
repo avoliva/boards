@@ -1,4 +1,5 @@
 # Django settings for boards project.
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -57,12 +58,13 @@ USE_TZ = True
 # # trailing slash.
 # # Examples: "http://example.com/media/", "http://media.example.com/"
 # MEDIA_URL = ''
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 # # Absolute path to the directory static files should be collected to.
 # # Don't put anything in this directory yourself; store your static files
 # # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # # Example: "/var/www/example.com/static/"
-STATIC_ROOT = '/home/avoliva/Code/boards/boards/static/'
+STATIC_ROOT= os.path.join(PROJECT_ROOT,'static/')
 
 # # URL prefix for static files.
 # # Example: "http://example.com/static/", "http://static.example.com/"
@@ -70,10 +72,14 @@ STATIC_URL = '/static/'
 
 # # Additional locations of static files
 STATICFILES_DIRS = (
-    '/home/avoliva/Code/boards/boards/static/css',
-    '/home/avoliva/Code/boards/boards/static/images',
-    '/home/avoliva/Code/boards/boards/static/js',
-    '/home/avoliva/Code/boards/boards/static/templates',
+    os.path.join(STATIC_ROOT, 'css'),
+    os.path.join(STATIC_ROOT, 'images'),
+    os.path.join(STATIC_ROOT, 'js'),
+    os.path.join(STATIC_ROOT, 'templates'),
+    # '/home/avoliva/Code/boards/boards/static/css',
+    # '/home/avoliva/Code/boards/boards/static/images',
+    # '/home/avoliva/Code/boards/boards/static/js',
+    # '/home/avoliva/Code/boards/boards/static/templates',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.

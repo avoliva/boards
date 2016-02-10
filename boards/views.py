@@ -150,13 +150,13 @@ class Subreddit(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(Subreddit, self).get_context_data(**kwargs)
-        count = self.request.GET.get('count', 25)
+        count = self.request.GET.get('count', 0)
         after = self.request.GET.get('after', None)
         reddit = Reddit()
         listing = reddit.load_subreddit_list(context['subreddit'], count, after)
         # import ipdb; ipdb.set_trace()
         context['topic_list'] = listing
-        context['next_page'] = '?count=25&after={}'.format(listing[-1]['name'])
+        context['next_page'] = '?count={}&after={}'.format(int(count) += 25, listing[-1]['name'])
         # context['latest_articles'] = Article.objects.all()[:5]
         return context
 

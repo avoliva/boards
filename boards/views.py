@@ -89,7 +89,7 @@ class Reddit(object):
             if comment.parent and comment.parent.split('_')[0] == 't1':
                 parent = next((l for l in comments if l.id == comment.parent), None)
                 comment.parent_content(
-                    html=parent.content,
+                    html=parent.html,
                     author=parent.user,
                     postedOn=parent.created,
                     id=parent.id,

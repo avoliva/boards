@@ -36,8 +36,8 @@ downs:
 
 class Comment(object):
 
-    def __init__(self, id, html, author, 
-                 points, postedOn, level, parent=None):
+    def __init__(self, id=None, html, author, 
+                 points=None, postedOn, level=None, parent=None):
         self.id = id
         self.content =html
         self.user = author
@@ -45,7 +45,7 @@ class Comment(object):
         self.created = postedOn
         self.level = level
         self.parent = parent
-        self.parent_content = Comment()
+        self.parent_content = Comment
 
 
 class Reddit(object):
@@ -87,9 +87,11 @@ class Reddit(object):
             # import ipdb; ipdb.set_trace()
             if comment.parent and comment.parent.split('_')[0] == 't1':
                 parent = next((l for l in comments if l.id == comment.parent), None)
-                comment.parent_content.content = parent.content
-                comment.parent_content.author = parent.author
-                comment.parent_content.created = parent.created
+                comment.parent_content(
+                    html=parent.content,
+                    author=parent.author,
+                    postedOn=parent.created
+                )
             if comment.user is not None:
                 comments.append(comment)
                 if not self_post:

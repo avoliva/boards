@@ -3,7 +3,8 @@
 {% block content %}
   <h1>Post Message</h1>
   {% if not authenticated %}
-    <p style="color: red;">You are not authenticated on Reddit please authenticate <a target="_blank" href="#">here</a>. (New Window)</p>
+    <p style="color: red;">You are not authenticated on Reddit please authenticate <a target="_blank" href="https://www.reddit.com/api/v1/authorize?client_id=a5m82XGsb7W3cw&response_type=code&
+    state=yeti&redirect_uri=http://django-yeti.herokuapp.com&duration=DURATION&scope=identity,read,submit,vote&duration=permanent">here</a>. (New Window)</p>
   {% endif %}
   <form action="{{ request.get_full_path }}" method="post">{% csrf_token %}
     <span style="color: #ff0000">

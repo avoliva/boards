@@ -36,8 +36,9 @@ downs:
 
 class Comment(object):
 
-    def __init__(self, id=None, html, author, 
-                 points=None, postedOn, level=None, parent=None):
+    def __init__(self, id=None, html=None, author=None, 
+                 points=None, postedOn=None,
+                 level=None, parent=None):
         self.id = id
         self.content =html
         self.user = author

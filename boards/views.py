@@ -55,7 +55,7 @@ class Reddit(object):
         self.url = u
 
     def me(self):
-        host = 'https://oauth.reddit.com/api/v1/me.json'
+        host = 'http://api.reddit.com/api/me.json'
         headers = {
             'User-Agent': 'python/requests',
         }
@@ -66,18 +66,20 @@ class Reddit(object):
         return response
 
     def reply(self, content, parent):
+        me = self.me()
+        # import ipdb; ipdb.set_trace()
         headers = {
             'User-Agent': 'python/requests',
         }
         response = requests.post(
-            'https://oauth.reddit.com/api/comment',
+            'http://api.reddit.com/api/comment',
             headers=headers,
             data = {
                 'text': content,
                 'thing_id': parent,
                 'api_type': 'json',
             })
-   
+        # import ipdb; ipdb.set_trace()
         return response
 
     def load_comment(self, data, level):

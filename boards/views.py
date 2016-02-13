@@ -90,7 +90,7 @@ class Reddit(object):
                 parent = next((l for l in comments if l.id == comment.parent), None)
                 comment.parent_content(
                     html=parent.content,
-                    author=parent.author,
+                    author=parent.user,
                     postedOn=parent.created
                 )
             if comment.user is not None:

@@ -20,16 +20,15 @@
     {% else %}
       <a href="">Filter</a>
     {% endif %}
-    <!-- | <a href="./message.php?id={$table.message_id}&amp;topic={$topic_id}&amp;r={$table.revision_id}">Message Detail
-    </a> --><!--  |
-    <a href="./postmsg.php?board=42&amp;topic={{ m.topic.id }}&amp;quote={{ m.id }}" 
-      onclick="return quickpost_quote('t,{{ m.user.id }},{{ m.id }}@1');">Quote</a> -->
+    | <a href="./message.php?id={$table.message_id}&amp;topic={$topic_id}&amp;r={$table.revision_id}">Message Detail
+    </a>  |
+    <a href="{% url 'reddit_reply' %}?p={{m.id}}" >Reply</a>
       <!-- /mcreate/?t={{ message.0.topic.id }}&q={{ m.id }} -->
   </div>
   <table class="message-body">
     <tr>
       <td msgid="t,{$topic_id},{$table.message_id}@{$table.revision_id}" class="message">
-        {% if m.parent_content %}
+        {% if m.parent_content.id %}
             <div class="parent-content">
               <div class="message-container" id="m{{ m.parent_content.id }}">
                 <div class="message-top">
@@ -43,9 +42,11 @@
 
               </div>
             </div>
+            {{ m.parent_content.content | safe}}
+          </div>
             <br/></br>
         {% endif %}
-        {{ m.parent_content.content | safe }}
+        {{ m.content | safe }}
       </td>
       <td class="userpic">
         <div class="userpic-holder">

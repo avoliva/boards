@@ -54,6 +54,32 @@ class Reddit(object):
     def __init__(self, u=None):
         self.url = u
 
+    def me(self):
+        host = 'https://oauth.reddit.com/api/v1/me.json'
+        headers = {
+            'User-Agent': 'python/requests',
+        }
+        response = requests.get(
+            host,
+            headers=headers
+        )
+        return response
+
+    def reply(self, content, parent):
+        headers = {
+            'User-Agent': 'python/requests',
+        }
+        response = requests.post(
+            'https://oauth.reddit.com/api/comment',
+            headers=headers,
+            data = {
+                'text': content,
+                'thing_id': parent,
+                'api_type': 'json',
+            })
+   
+        return response
+
     def load_comment(self, data, level):
         comment = Comment(
             id=data.get('name'),
@@ -88,12 +114,14 @@ class Reddit(object):
             # import ipdb; ipdb.set_trace()
             if comment.parent and comment.parent.split('_')[0] == 't1':
                 parent = next((l for l in comments if l.id == comment.parent), None)
-                comment.parent_content(
-                    html=parent.html,
-                    author=parent.user,
-                    postedOn=parent.created,
-                    id=parent.id,
-                )
+                if parent:
+                    comment.parent_content = Comment(
+                        html=parent.content,
+                        author=parent.user,
+                        postedOn=parent.created,
+                        id=parent.id,
+                        parent=parent.parent,
+                    )
             if comment.user is not None:
                 comments.append(comment)
                 if not self_post:
@@ -223,6 +251,50 @@ class UserCreateForm(FormView):
         return super(UserCreateForm, self).form_valid(form)
 
 
+class RedditAuthView(TemplateView):
+
+    template_name = 'history.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(RedditAuthView, self).get_context_data(**kwargs)
+        return context
+
+
+class RedditReplyView(FormView):
+
+    template_name = 'message_create.html'
+
+    form_class = models.RedditReplyForm
+
+    def render_to_response(self, context, **kwargs):
+        # import ipdb; ipdb.set_trace()
+        r = Reddit()
+        me = r.me()
+        context['authenticated'] = True
+        if me.status_code == 403:
+            context['authenticated'] = False
+        return super(RedditReplyView, self).render_to_response(
+            context,
+            **kwargs
+        )
+
+    # def get(self, request, *args, **kwargs):
+    #     r = Reddit()
+    #     me = r.me()
+    #     if me.status_code == 403:
+    #         conte
+    #     import ipdb; ipdb.set_trace()
+        # return super(RedditReplyView, self).get(request)
+
+    def form_valid(self, form):
+        content = form.cleaned_data['content']
+        parent = self.request.GET.get('p', None)
+        r = Reddit()
+ 
+        r.reply(content, parent)
+        return super(RedditReplyView, self).form_valid(form)
+
+
 class MessageCreateView(FormView):
 
     template_name = 'message_create.html'
@@ -230,7 +302,7 @@ class MessageCreateView(FormView):
     form_class = models.MessageCreateForm
 
     def get(self, request, *args, **kwargs):
-        if request.GET.get('output') is not None:
+        if request.GET.get('output', None):
             import json
             _id = request.GET.get('id')
             jobj = json.dumps(dict(
@@ -242,19 +314,13 @@ class MessageCreateView(FormView):
         return super(MessageCreateView, self).get(request)
 
     def form_valid(self, form):
-        if self.request.GET.get('t') is not None:
+        if self.request.GET.get('t', None):
             try:
                 topic = models.Topic.objects.get(pk=self.request.GET.get('t'))
             except ObjectDoesNotExist:
                 return HttpResponse("Topic doensn't exist. <a href='/'>Go Home</a>")
             content = form.cleaned_data['content']
             user = self.request.user
-
-
-
-
-
-            0
 
             m = models.Message.objects.create(user=user, topic=topic, content=content)
             m.save()

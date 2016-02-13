@@ -72,6 +72,15 @@ class UserCreateForm(forms.ModelForm):
         }
 
 
+class RedditReplyForm(forms.ModelForm):
+
+    class Meta:
+        model = Message
+        fields = ('content',)
+        widgets = {
+            'content': forms.Textarea(attrs={'class': 'input-xxlarge', 'rows': 20, 'cols': 100})
+        }
+
 class MessageCreateForm(forms.ModelForm):
 
     class Meta:

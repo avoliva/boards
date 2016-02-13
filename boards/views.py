@@ -55,7 +55,7 @@ class Reddit(object):
         self.url = u
 
     def me(self):
-        host = 'http://api.reddit.com/api/me.json'
+        host = 'https://www.reddit.com/api/me.json'
         headers = {
             'User-Agent': 'python/requests',
         }
@@ -67,7 +67,7 @@ class Reddit(object):
 
     def reply(self, content, parent):
         me = self.me()
-        # import ipdb; ipdb.set_trace()
+        import ipdb; ipdb.set_trace()
         headers = {
             'User-Agent': 'python/requests',
         }

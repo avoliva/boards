@@ -91,7 +91,8 @@ class Reddit(object):
                 comment.parent_content(
                     html=parent.content,
                     author=parent.user,
-                    postedOn=parent.created
+                    postedOn=parent.created,
+                    id=parent.id,
                 )
             if comment.user is not None:
                 comments.append(comment)

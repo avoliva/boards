@@ -30,10 +30,22 @@
     <tr>
       <td msgid="t,{$topic_id},{$table.message_id}@{$table.revision_id}" class="message">
         {% if m.parent_content %}
-            <div class="parent-content">{{ m.parent_content | safe }}</div>
+            <div class="parent-content">
+              <div class="message-container" id="m{{ m.parent_content.id }}">
+                <div class="message-top">
+                <b>From:</b> <a href="">{{ m.parent_content.user }}</a> | 
+                <b>Posted:</b> {{ m.parent_content.created }} | 
+                {% if filter %}
+                  <a href="">Unfilter</a>
+                {% else %}
+                  <a href="">Filter</a>
+                {% endif %}
+
+              </div>
+            </div>
             <br/></br>
         {% endif %}
-        {{ m.content | safe }}
+        {{ m.parent_content.content | safe }}
       </td>
       <td class="userpic">
         <div class="userpic-holder">

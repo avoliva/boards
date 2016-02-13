@@ -30,7 +30,7 @@
     <tr>
       <td msgid="t,{$topic_id},{$table.message_id}@{$table.revision_id}" class="message">
         {% if m.parent_content %}
-            <em style="font-style:italic !imporant;">{{ m.parent_content | safe }}</em>
+            <div class="parent-content">{{ m.parent_content | safe }}</div>
             <br/></br>
         {% endif %}
         {{ m.content | safe }}

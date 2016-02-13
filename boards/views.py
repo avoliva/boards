@@ -251,15 +251,6 @@ class UserCreateForm(FormView):
         return super(UserCreateForm, self).form_valid(form)
 
 
-class RedditAuthView(TemplateView):
-
-    template_name = 'history.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(RedditAuthView, self).get_context_data(**kwargs)
-        return context
-
-
 class RedditReplyView(FormView):
 
     template_name = 'message_create.html'

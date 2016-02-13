@@ -45,7 +45,7 @@ class Comment(object):
         self.created = postedOn
         self.level = level
         self.parent = parent
-        self.parent_content = None
+        self.parent_content = Comment()
 
 
 class Reddit(object):
@@ -86,7 +86,10 @@ class Reddit(object):
                 BeautifulSoup(su.unescape(comment.content)).find('div').findAll('p')])
             # import ipdb; ipdb.set_trace()
             if comment.parent and comment.parent.split('_')[0] == 't1':
-                comment.parent_content = next((l for l in comments if l.id == comment.parent), None).content
+                parent = next((l for l in comments if l.id == comment.parent), None)
+                comment.parent_content.content = parent.content
+                comment.parent_content.author = parent.author
+                comment.parent_content.created = parent.created
             if comment.user is not None:
                 comments.append(comment)
                 if not self_post:

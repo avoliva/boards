@@ -89,8 +89,11 @@ em {
 }
 
 .parent-content {
-  border-left:2px solid black;
+  border-left:2px solid #689cdf;
   margin-left: 5px;
+  padding-left: 6px;
+  
+
 }
 
 input [type="text"] {

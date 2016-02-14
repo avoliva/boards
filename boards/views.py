@@ -55,9 +55,10 @@ class Reddit(object):
         self.url = u
 
     def me(self):
-        host = 'https://www.reddit.com/api/me.json'
+        host = 'https://www.reddit.com/api/v1/me.json?jsonp=fake'
         headers = {
             'User-Agent': 'python/requests',
+            'Content-Type': 'application/json',
         }
         response = requests.get(
             host,
@@ -67,14 +68,15 @@ class Reddit(object):
 
     def reply(self, content, parent):
         me = self.me()
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
         headers = {
             'User-Agent': 'python/requests',
+            'Content-Type': 'application/json'
         }
         response = requests.post(
-            'http://api.reddit.com/api/comment',
+            'https://oauth.reddit.com/api/comment',
             headers=headers,
-            data = {
+            json = {
                 'text': content,
                 'thing_id': parent,
                 'api_type': 'json',
@@ -266,6 +268,7 @@ class RedditReplyView(FormView):
         context['authenticated'] = True
         if me.status_code == 403:
             context['authenticated'] = False
+        self.success_url = '/r/redditdev'
         return super(RedditReplyView, self).render_to_response(
             context,
             **kwargs

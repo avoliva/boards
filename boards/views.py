@@ -55,7 +55,7 @@ class Reddit(object):
         self.url = u
 
     def me(self):
-        host = 'https://www.reddit.com/api/v1/me.json?jsonp=fake'
+        host = 'https://oauth.reddit.com/api/v1/me.json?jsonp=fake'
         headers = {
             'User-Agent': 'python/requests',
             'Content-Type': 'application/json',
@@ -268,7 +268,7 @@ class RedditReplyView(FormView):
         context['authenticated'] = True
         if me.status_code == 403:
             context['authenticated'] = False
-        self.success_url = '/r/redditdev'
+
         return super(RedditReplyView, self).render_to_response(
             context,
             **kwargs
@@ -288,7 +288,8 @@ class RedditReplyView(FormView):
         r = Reddit()
  
         r.reply(content, parent)
-        return super(RedditReplyView, self).form_valid(form)
+        self.success_url = '/r/redditdev'
+        return HttpResponseRedirect(self.success_url)
 
 
 class MessageCreateView(FormView):
